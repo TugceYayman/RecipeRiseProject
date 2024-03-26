@@ -1,0 +1,41 @@
+.allRecipes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 20px;
+    position: relative;
+}
+
+.allRecipes::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: #ddd; /* Light gray shade */
+}
+/* Hide the divider on screens smaller than tablets (768px) */
+@media (max-width: 1048px) {
+    .allRecipes::before {
+        display: none;
+    }
+}
+
+.card {
+    border-radius: 1.6em;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+}
+
+#speciality-info:hover {
+    color: grey;
+}
+
+#speciality-info {
+    margin-bottom: 2rem;
+}

@@ -1,0 +1,28 @@
+.search-container {
+    position: relative;
+    background: url('/assets/images/background.jpeg') no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    padding: 100px 20px; /* Adjust padding as needed */
+  }
+  
+  .search-container h1 {
+    font-size: 3em; /* Adjust font size as needed */
+    color: #fff; /* Choose a text color that stands out */
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    padding: 10px;
+    width: 50%; /* Adjust width as needed */
+    margin-bottom: 20px;
+  }
+  
+  .search-button {
+    padding: 10px 20px;
+    background-color: #a8d1d1; /* Color from your navbar */
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  

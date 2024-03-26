@@ -1,0 +1,73 @@
+.profile-userpic img {
+    width: 170px;
+    height: 170px;
+    object-fit: cover; /* This ensures the image covers the area without being stretched */
+}
+
+.changeButton {
+    background-color: #a8d1d1;
+    color: black;
+    border-radius: 6px;
+    border: none;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+    width: fit-content;
+    height: fit-content;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 20px 0; /* Add more vertical margin for separation */
+    display: block; /* Ensure it's a block element to fill width */
+    padding: 0.5rem 1rem;
+ 
+}
+
+.profile-usertitle-name{
+    font-size: 1.3em;
+    width: 100%;
+}
+
+.changeButton:hover {
+    transform: scale(1.05); /* Scales up the button to 105% of its original size */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    opacity: 1; /* Increase the opacity on hover for better visual feedback */
+}
+
+
+.profile-usermenu .nav-item {
+    border-bottom: 1px solid #cccccc; /* Add a bottom border to each list item */
+    margin: 15px 0 15px 0;
+}
+
+.profile-usermenu .nav-link {
+    display: block; /* Stretch the link to fill the list item */
+    padding: 0.5rem 1rem; /* Add some padding to the link for spacing */
+    color: black; /* Set the text color for the link */
+    background-color: white; /* Set the background color for the link */
+}
+
+.profile-usermenu .nav-link:hover {
+    background-color: #f8f9fa; /* Change the background on hover */
+}
+
+/* If using Bootstrap 5, you may need to override the default Bootstrap styles */
+.profile-usermenu .nav-link.active {
+    background-color: #e9ecef; /* Active item background */
+    color: black; /* Set the text color for the active link */
+    border-radius: 0; /* Remove border radius if any */
+}
+
+.content-block {
+    display: none;   
+}
+
+.btn{
+    margin: 2em 0 2em 0;
+    background-color:#88a4a4;
+}
+.form-group{
+    margin: 30px 0 30px 0;
+}
+
+.profile-content h2{
+    margin: 40px 0 40px 0;
+}
+

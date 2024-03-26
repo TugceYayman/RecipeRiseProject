@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+<mainContainer></mainContainer>
+<div class="container my-3">
+    <div class="allRecipes">
+        <div *ngFor="let recipe of recipes">
+            <div class="card my-3" style="width: 460px; background-color: #dcecec">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/assets/images/{{recipe.imageUrl}}" alt="" class="card-img img-fluid rounded-start img-responsive" style="height: 250px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{recipe.name}}</h5>
+                            <p class="card-text"><small class="text-body-secondary">{{recipe.description}}</small></p>
+                            <p id="speciality-info" class="card-text">{{recipe.cuisineType}}</p>
+                            <a class="btn btn-large btn-outline-secondary" href="#" role="button" style="border-color: #a8d1d1;">Link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #noRecipes>
+            <div class="alert alert-warning">
+                no recipes found
+            </div>
+        </ng-template>
+    </div>
+</div>
+<app-footer></app-footer>
