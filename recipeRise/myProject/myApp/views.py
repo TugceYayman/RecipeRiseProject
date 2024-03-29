@@ -9,8 +9,12 @@ from rest_framework import status
 from django.contrib.auth import logout
 from rest_framework.exceptions import ValidationError
 from rest_framework import generics, permissions
-from .models import Recipe
-from .serializers import RecipeSerializer
+from .models import Recipe, Cuisine
+from .serializers import RecipeSerializer, CuisineSerializer
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import get_user_model
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 @api_view(['POST'])
@@ -48,29 +52,45 @@ def api_signup(request):
         print(e)
         return Response({'error': 'An internal error occurred.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-
-
-
-@api_view(['POST'])
+@csrf_exempt
+@api_view(['POST', 'GET'])
 def api_login(request):
-    identifier = request.data.get('identifier')
-    password = request.data.get('password')
+    if request.method == 'GET':
+        # Handle GET request, maybe render a login form
+        return Response({'message': 'This endpoint requires a POST request for login.'}, status=405)
 
-    # Attempt to fetch the user by email or username
-    user = None
-    if '@' in identifier:
-        user = CustomUser.objects.filter(email=identifier).first()
-    else:
-        user = CustomUser.objects.filter(username=identifier).first()
+    elif request.method == 'POST':
+        # Retrieve username and password from request data
+        username = request.data.get('username')
+        password = request.data.get('password')
 
-    if user:
-        # Use authenticate to verify username and password
-        user = authenticate(request, username=user.username, password=password)
+        # Ensure both username and password are provided
+        if not username or not password:
+            return Response({'error': 'Both username and password are required.'}, status=400)
+
+        # Get the User model
+        User = get_user_model()
+
+        # Initialize user to None
+        user = None
+
+        # Check if the username is an email and get the user
+        if '@' in username:
+            try:
+                email_user = User.objects.get(email=username)
+                user = authenticate(username=email_user.username, password=password)
+            except User.DoesNotExist:
+                pass
+        else:
+            user = authenticate(username=username, password=password)
+
+        # If authentication was successful
         if user:
-            login(request, user)
-            return Response({'message': 'Login successful'}, status=200)
-    return Response({'error': 'Invalid credentials'}, status=401)
-
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key}, status=200)
+        else:
+            # Authentication failed
+            return Response({'error': 'Invalid credentials'}, status=401)
 
 @api_view(['POST'])
 def logout_view(request):
@@ -82,6 +102,10 @@ def logout_view(request):
         print(f"Error during logout: {str(e)}")
         return Response({'error': 'An error occurred during logout.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+        
+class CuisineList(generics.ListAPIView):
+    queryset = Cuisine.objects.all()
+    serializer_class = CuisineSerializer
 
 class RecipeListCreateView(generics.ListCreateAPIView):
     queryset = Recipe.objects.all()

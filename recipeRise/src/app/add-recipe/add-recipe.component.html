@@ -7,6 +7,12 @@
     </div>
 
     <div class="form-group">
+      <label for="recipeImage">Recipe Image</label>
+      <input type="file" id="recipeImage" (change)="onFileSelected($event)" />
+    </div>
+    
+
+    <div class="form-group">
       <label for="ingredients">Ingredients</label>
       <textarea id="ingredients" name="ingredients" ngModel rows="4" required></textarea>
     </div>
@@ -19,9 +25,9 @@
     <!-- Cuisine selection -->
     <div class="form-group">
       <label for="cuisine">Cuisine</label>
-      <select id="cuisine" name="cuisine" ngModel required>
+      <select id="cuisine" name="cuisine" [(ngModel)]="selectedCuisine" required>
         <option *ngFor="let cuisine of cuisines" [value]="cuisine.id">{{ cuisine.name }}</option>
-      </select>
+      </select>      
     </div>
 
     <button type="submit" class="submit-btn">Add Recipe</button>

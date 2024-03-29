@@ -38,7 +38,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
+class CuisineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cuisine
+        fields = ('id', 'name')
+        
 class RecipeSerializer(serializers.ModelSerializer):
     # Display the CustomUser's information if needed
     user = serializers.PrimaryKeyRelatedField(read_only=True)

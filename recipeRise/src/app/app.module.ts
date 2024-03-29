@@ -14,6 +14,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor'; // Adjust the path based on your project structure
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +37,7 @@ import { AddRecipeComponent } from './add-recipe/add-recipe.component';
     AppRoutingModule,
     FormsModule // Add FormsModule to the imports array
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

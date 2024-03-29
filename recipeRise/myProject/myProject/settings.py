@@ -11,15 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-0%riwal*zo-^7q=_83m2b7k)2y)wrtk37$$+8uw5$^yxxpa1(&"
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -32,8 +28,16 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:4200',  # Example: Your Angular frontend URL
 ]
 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:4200']
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",  # Adjust this to the domain of your Angular app
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
 # Update CORS_MIDDLEWARE_ALLOW_ALL to False if you want to use CORS_ORIGIN_WHITELIST
-CORS_ALLOW_ALL_ORIGINS = True  # This line should be removed or set to False
+CORS_ALLOW_ALL_ORIGINS = False  # This line should be removed or set to False
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -145,3 +149,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
