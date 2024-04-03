@@ -1,0 +1,25 @@
+
+  <div *ngIf="recipe" class="recipe-details">
+    <div class="recipe-detail-container">
+        <h1>{{ recipe.title }}</h1>
+        <div class="recipe-image">
+          <img [src]="recipe.image" alt="Image of {{ recipe.title }}">
+        </div>
+        <div class="recipe-metadata">
+          <span class="cuisine-type">Cuisine: {{ recipe.cuisine_name }}</span>
+        </div>
+        <div class="recipe-ingredients">
+          <h2>Ingredients</h2>
+          <ul>
+            <!-- Loop through ingredients -->
+            <li *ngFor="let ingredient of getIngredientsArray(recipe.ingredients)">{{ ingredient }}</li>
+          </ul>
+        </div>
+        <div class="recipe-instructions">
+          <h2>Instructions</h2>
+          <p>{{ recipe.instructions }}</p>
+        </div>
+      </div>
+  </div>
+  
+  

@@ -33,6 +33,7 @@ export class AuthService {
     }, error => {
       console.error('Logout failed', error);
       localStorage.removeItem('userToken');
+      localStorage.removeItem('token');
       sessionStorage.removeItem('userToken');
       this.router.navigate(['/login']);
     });

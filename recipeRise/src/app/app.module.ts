@@ -15,7 +15,8 @@ import { SignupComponent } from './signup/signup.component';
 import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './interceptors/token.interceptor'; // Adjust the path based on your project structure
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component'; // Adjust the path based on your project structure
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor'; // Adjust t
     LoginComponent,
     SignupComponent,
     AddRecipeComponent,
+    RecipeDetailComponent,
   ],
   imports: [
     BrowserModule,

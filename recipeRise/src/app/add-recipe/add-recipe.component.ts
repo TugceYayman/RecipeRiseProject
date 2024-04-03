@@ -3,6 +3,13 @@ import { RecipeService } from '../recipe.service';
 import { Recipe } from '../models/recipe.model'; // Adjust the path as necessary
 import { Cuisine } from '../cuisine.model';
 
+declare global {
+  interface FormData {
+    entries(): IterableIterator<[string, FormDataEntryValue]>;
+  }
+}
+
+
 @Component({
   selector: 'app-add-recipe',
   templateUrl: './add-recipe.component.html',
@@ -36,6 +43,10 @@ export class AddRecipeComponent implements OnInit  {
 
   submitRecipe() {
 
+    console.log('Title:', this.recipeTitle); // Log the title
+    console.log('Ingredients:', this.ingredients); // Log the ingredients
+    console.log('Instructions:', this.instructions); // Log the instructions
+
     const formData = new FormData();
     formData.append('title', this.recipeTitle);
     formData.append('ingredients', this.ingredients);
@@ -45,13 +56,13 @@ export class AddRecipeComponent implements OnInit  {
     if (this.selectedFile) {
       formData.append('image', this.selectedFile, this.selectedFile.name);
     }
-    // Assuming user ID is managed by backend session/token
-    // const recipeData = {
-    //   title: this.recipeTitle,
-    //   ingredients: this.ingredients,
-    //   instructions: this.instructions,
-    //   // If needed, include 'user' here, but typically the backend would infer this from the session or auth token
-    // };
+
+     // Log FormData content before sending
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+      // Log the form data for debugging purposes
+
     this.recipeService.addRecipe(formData).subscribe({
       next: (response) => {
         console.log(response);

@@ -23,21 +23,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Add CORS_ORIGIN_WHITELIST
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:4200',  # Example: Your Angular frontend URL
-]
+# # Add CORS_ORIGIN_WHITELIST
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:4200',  # Example: Your Angular frontend URL
+# ]
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:4200']
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",  # Adjust this to the domain of your Angular app
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",  
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 # Update CORS_MIDDLEWARE_ALLOW_ALL to False if you want to use CORS_ORIGIN_WHITELIST
-CORS_ALLOW_ALL_ORIGINS = False  # This line should be removed or set to False
+CORS_ALLOW_ALL_ORIGINS = True  # This line should be removed or set to False
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

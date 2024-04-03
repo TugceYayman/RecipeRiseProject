@@ -19,7 +19,25 @@ export class LoginComponent {
     this.authService.login(this.usernameOrEmail, this.password).subscribe(
       data => {
         console.log('Login success', data);
+
+      
+         const userIdKey = 'userID'; // Change this to match the key in the response
+         const userId = Number(data[userIdKey]);
+        
+        // // Check if the parsed ID is a number
+        // if (Number.isNaN(userId)) {
+        //   console.error(`User ID is not a number: ${data[userIdKey]}`);
+        //   this.errorMessage = 'An error occurred during login. Please try again.';
+        //   return;
+        // }
+
         localStorage.setItem('token', data.token); // Store the token in local storage
+        localStorage.setItem('username', this.usernameOrEmail);
+
+        localStorage.setItem('userId', userId.toString());
+        console.log('Stored userId', userId); // Debugging line
+
+
         this.router.navigate(['/recipe-list']); // Navigate to the desired route after login
       },
       error => {

@@ -51,8 +51,8 @@ class RecipeSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Recipe
-        fields = '__all__'
-        read_only_fields = ('user',)  # Make 'user' and 'cuisine_name' read-only
+        fields = ('id', 'title', 'ingredients', 'instructions', 'image', 'created_at', 'updated_at', 'user', 'cuisine', 'cuisine_name')
+        read_only_fields = ('user', 'cuisine_name')  # Ensure 'cuisine_name' is read-only since it's derived from a related field
 
     def create(self, validated_data):
         # Assign the CustomUser from the request to the recipe when creating a new recipe

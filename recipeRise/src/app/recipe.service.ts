@@ -20,13 +20,40 @@ export class RecipeService {
       }
     };
   }
-
+  
   addRecipe(recipeData: FormData): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}recipes/`, recipeData);
+
+    let object: any = {};
+    recipeData.forEach((value, key) => object[key] = value);
+    console.log('Form Data:', object);
+    
+    const httpOptions = this.getHttpOptions(); // Use the headers with the token
+    
+    return this.http.post<any>(`${this.apiUrl}recipes/`, recipeData, httpOptions);
   }
 
   getCuisines(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}cuisines/`);
   }
-  // Implement other methods as needed, like getRecipes, updateRecipe, deleteRecipe
+
+  getRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.apiUrl}recipes/`);
+  }
+
+  getRecipesByUser(userId: number): Observable<Recipe[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Token ${localStorage.getItem('token')}`
+      })
+    };
+    return this.http.get<Recipe[]>(`${this.apiUrl}users/${userId}/recipes/`, httpOptions);
+  }
+
+  //For recipe-detail 
+  getRecipeById(id: number): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.apiUrl}recipes/${id}/`);
+  }
+  
+
+  
 }

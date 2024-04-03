@@ -71,3 +71,52 @@
     margin: 40px 0 40px 0;
 }
 
+/* Align the cards in a flex container */
+.allRecipes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* This will space out the cards evenly */
+    gap: 20px; /* This replaces 'column-gap' and also provides a gap in rows */
+}
+
+/* Style the cards with a nice border-radius and a hover effect */
+.card {
+    background-color: #dcecec;
+    border-radius: 1.6em;
+    overflow: hidden; /* This makes sure that children (like images) do not overflow the rounded corners */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+/* Add the hover effect for the card */
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly larger shadow to lift the card */
+    transform: scale(1.02); /* Slightly scale up the card */
+}
+
+/* Additional styles for content inside the card */
+.card-body {
+    padding: 16px; /* Adjust padding as needed */
+}
+
+.card-title {
+    margin-bottom: 0.5rem; /* Space between the title and the content */
+}
+
+.card-text {
+    color: #333; /* Darker text color for better readability */
+    margin-bottom: 1rem; /* Space between the text and the bottom of the card */
+}
+
+/* Style the view recipe button */
+.btn-outline-secondary {
+    border-color: #a8d1d1;
+    color: #a8d1d1;
+}
+
+.btn-outline-secondary:hover {
+    border-color: #8fb0b2;
+    color: #8fb0b2; /* Darker shade on hover */
+    text-decoration: none; /* Remove underline from links on hover */
+}
+
+/* Since you don't want a media query, I'm leaving that out */

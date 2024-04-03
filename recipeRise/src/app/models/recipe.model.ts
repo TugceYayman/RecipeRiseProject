@@ -6,7 +6,10 @@ export interface Recipe {
     ingredients: string;
     instructions: string;
     cuisine: number
+    cuisine_name: string;
     created_at?: string; // Optional, auto-assigned by the backend
     updated_at?: string; // Optional, auto-assigned by the backend
+    image?: string; 
+    user_id: number;
   }
   

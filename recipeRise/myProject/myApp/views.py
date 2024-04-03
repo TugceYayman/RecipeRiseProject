@@ -14,6 +14,7 @@ from .serializers import RecipeSerializer, CuisineSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.generics import ListAPIView
 
 
 
@@ -87,7 +88,7 @@ def api_login(request):
         # If authentication was successful
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=200)
+            return Response({'token': token.key, 'userID': user.id}, status=200)
         else:
             # Authentication failed
             return Response({'error': 'Invalid credentials'}, status=401)
@@ -113,7 +114,10 @@ class RecipeListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        print(serializer.is_valid())  # Check if serializer is valid
+        print(serializer.errors)      # Print errors if any
+        if serializer.is_valid():
+            serializer.save(user=self.request.user)
 
 class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.all()
@@ -132,7 +136,10 @@ class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        print(self.request.data)
+        # Call the superclass's method to handle the standard save logic
+        super().perform_create(serializer)
+        #serializer.save(user=self.request.user)
 
     def perform_update(self, serializer):
         if serializer.instance.user == self.request.user:
@@ -146,3 +153,12 @@ class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
         else:
             raise permissions.PermissionDenied("You do not have permission to delete this recipe.")
  
+
+
+class UserRecipeList(ListAPIView):
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        # This will capture the 'user_id' from the URL and filter the recipes
+        user_id = self.kwargs['userId']
+        return Recipe.objects.filter(user_id=user_id)
