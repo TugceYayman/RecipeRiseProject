@@ -19,6 +19,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Adjust the path based on your project structure
 import { MatDialogModule } from '@angular/material/dialog';
+import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     SignupComponent,
     AddRecipeComponent,
     RecipeDetailComponent,
+    UpdateDialogComponent,
   ],
   imports: [
     BrowserModule,

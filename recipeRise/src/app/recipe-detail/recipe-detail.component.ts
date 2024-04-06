@@ -2,6 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../models/recipe.model';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
 
 
 @Component({
@@ -23,7 +25,8 @@ export class RecipeDetailComponent implements OnInit {
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
   )
   { this.formData = new FormData(); }
 
@@ -151,12 +154,18 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.updateRecipe(this.recipeId, formData).subscribe({
       next: (data) => {
         console.log('Update successful', data);
+        this.dialog.open(UpdateDialogComponent, {
+          data: { title: 'Success', message: 'The recipe was updated successfully!' },
+        });
         this.router.navigate(['/profile-page']);
         this.isLoading = false;
       },
       error: (error) => {
         console.error('Error updating recipe:', error.error);
         this.errorMessage = 'There was an error updating the recipe. Please try again later.';
+        this.dialog.open(UpdateDialogComponent, {
+          data: { title: 'Error', message: 'Failed to update the recipe. Please try again later.' },
+        });
         this.isLoading = false;
       },
     });
