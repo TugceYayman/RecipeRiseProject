@@ -16,7 +16,7 @@ from django.contrib.auth import get_user_model
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
-
+from django.contrib.auth.hashers import check_password, make_password
 
 
 
@@ -167,3 +167,17 @@ class UserRecipeList(ListAPIView):
         # This will capture the 'user_id' from the URL and filter the recipes
         user_id = self.kwargs['userId']
         return Recipe.objects.filter(user_id=user_id)
+
+
+@api_view(['PUT'])
+def change_password(request):
+    user = request.user
+    current_password = request.data.get('current_password')
+    new_password = request.data.get('new_password')
+
+    if user and user.check_password(current_password):
+        user.password = make_password(new_password)
+        user.save()
+        return Response({'message': 'Password changed successfully'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Wrong current password'}, status=status.HTTP_400_BAD_REQUEST)

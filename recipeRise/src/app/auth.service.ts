@@ -53,4 +53,10 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.getToken() !== null;
   }
+
+  changePassword(currentPassword: string, newPassword: string) {
+    const url = 'http://localhost:8000/users/change_password/'; // Adjust to your backend URL
+    const body = { current_password: currentPassword, new_password: newPassword };
+    return this.http.put(url, body); // Assuming you're using HttpClient
+  }
 }

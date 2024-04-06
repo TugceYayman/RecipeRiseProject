@@ -18,6 +18,7 @@ urlpatterns = [
     path('login/', api_login, name='login'),
     path('logout', logout_view, name='logout'),
     path('', RedirectView.as_view(url='login/', permanent=True)),
+    path('users/change_password/', views.change_password, name='change_password'),
     path('users/<int:userId>/recipes/', UserRecipeList.as_view(), name='user-recipes'),  
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
