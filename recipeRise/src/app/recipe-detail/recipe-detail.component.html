@@ -1,25 +1,47 @@
 
-  <div *ngIf="recipe" class="recipe-details">
-    <div class="recipe-detail-container">
-        <h1>{{ recipe.title }}</h1>
-        <div class="recipe-image">
-          <img [src]="recipe.image" alt="Image of {{ recipe.title }}">
-        </div>
-        <div class="recipe-metadata">
-          <span class="cuisine-type">Cuisine: {{ recipe.cuisine_name }}</span>
-        </div>
-        <div class="recipe-ingredients">
-          <h2>Ingredients</h2>
-          <ul>
-            <!-- Loop through ingredients -->
-            <li *ngFor="let ingredient of getIngredientsArray(recipe.ingredients)">{{ ingredient }}</li>
-          </ul>
-        </div>
-        <div class="recipe-instructions">
-          <h2>Instructions</h2>
-          <p>{{ recipe.instructions }}</p>
-        </div>
+<app-navbar></app-navbar>
+<html>
+<div *ngIf="isLoading">Loading...</div>
+
+<!-- View Mode -->
+<div *ngIf="!isEditMode && recipe && !isLoading" class="recipe-view">
+  <h1>{{ recipe.title }}</h1>
+  <img [src]="recipe.image" alt="Current Recipe Image"  class="current-recipe-image">
+  <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+  <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+
+  <button class="btn btn-primary" (click)="toggleEdit(true)">Edit Recipe</button>
+  <button class="btn btn-danger" (click)="deleteRecipe(recipe.id)">Delete Recipe</button>
+</div>
+
+<!-- Edit Mode -->
+<div *ngIf="isEditMode && recipe && !isLoading" class="recipe-details">
+  <form #recipeForm="ngForm" (ngSubmit)="updateRecipe()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="recipeTitle">Title</label>
+      <input type="text" id="recipeTitle" name="title" [(ngModel)]="recipe.title" required>
+    </div>
+
+    <div class="form-group image-upload-container">
+      <label for="recipeImage" class="label-for-image" >Recipe Image</label>
+      <input type="file" id="recipeImage" name="image" (change)="onFileSelected($event)" required>
+      <div class="image-preview" *ngIf="recipe.image">
+        <img [src]="recipe.image" alt="Current Recipe Image"    class="current-recipe-image">
       </div>
-  </div>
-  
-  
+    </div>
+
+    <div class="form-group">
+      <label for="recipeIngredients">Ingredients</label>
+      <textarea id="recipeIngredients" name="ingredients" [(ngModel)]="recipe.ingredients" rows="4" required></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label for="recipeInstructions">Instructions</label>
+      <textarea id="recipeInstructions" name="instructions" [(ngModel)]="recipe.instructions" rows="6" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <button type="button" class="btn btn-secondary" (click)="toggleEdit(false)">Cancel</button>
+  </form>
+</div>
+</html>

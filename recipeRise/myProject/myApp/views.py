@@ -15,6 +15,8 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 
 
@@ -123,6 +125,7 @@ class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_queryset(self):
         """
@@ -142,17 +145,19 @@ class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
         #serializer.save(user=self.request.user)
 
     def perform_update(self, serializer):
-        if serializer.instance.user == self.request.user:
-            serializer.save()
-        else:
+        if serializer.instance.user != self.request.user:
             raise permissions.PermissionDenied("You do not have permission to edit this recipe.")
-
-    def perform_destroy(self, instance):
-        if instance.user == self.request.user:
-            instance.delete()
-        else:
-            raise permissions.PermissionDenied("You do not have permission to delete this recipe.")
- 
+        
+        # Check if an image is in the request
+        image = self.request.FILES.get('image')
+        if image:
+            # Save the image to the instance but do not commit yet
+            serializer.instance.image.save(image.name, image, save=False)
+        # Perform validation
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+    
 
 
 class UserRecipeList(ListAPIView):

@@ -44,25 +44,28 @@ class CuisineSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
         
 class RecipeSerializer(serializers.ModelSerializer):
-    # Display the CustomUser's information if needed
     user = serializers.PrimaryKeyRelatedField(read_only=True)
-    # Add a read-only field to display the cuisine name
     cuisine_name = serializers.CharField(source='cuisine.name', read_only=True)
+    image = serializers.ImageField(required=False, allow_null=True, use_url=True)
     
     class Meta:
         model = Recipe
         fields = ('id', 'title', 'ingredients', 'instructions', 'image', 'created_at', 'updated_at', 'user', 'cuisine', 'cuisine_name')
-        read_only_fields = ('user', 'cuisine_name')  # Ensure 'cuisine_name' is read-only since it's derived from a related field
+        read_only_fields = ('user', 'cuisine_name')
 
     def create(self, validated_data):
-        # Assign the CustomUser from the request to the recipe when creating a new recipe
         validated_data['user'] = self.context['request'].user
-        # No need to manually handle the cuisine here; it will be handled by the validated_data
         return Recipe.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-         # Standard update procedure. Loop through validated_data items and update them on the instance.
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
+        instance.title = validated_data.get('title', instance.title)
+        instance.ingredients = validated_data.get('ingredients', instance.ingredients)
+        instance.instructions = validated_data.get('instructions', instance.instructions)
+
+        # Handle image separately if it is in the request
+        if 'image' in self.context['request'].FILES:
+            image_file = self.context['request'].FILES['image']
+            instance.image.save(image_file.name, image_file, save=True)
+        
         instance.save()
         return instance

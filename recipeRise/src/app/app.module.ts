@@ -16,7 +16,9 @@ import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component'; // Adjust the path based on your project structure
+import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Adjust the path based on your project structure
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
     BrowserModule,
     HttpClientModule, 
     AppRoutingModule,
-    FormsModule // Add FormsModule to the imports array
+    FormsModule,
+    BrowserAnimationsModule, // Add FormsModule to the imports array
+    MatDialogModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },],
   bootstrap: [AppComponent]

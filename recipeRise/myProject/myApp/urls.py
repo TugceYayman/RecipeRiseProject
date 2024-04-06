@@ -19,8 +19,5 @@ urlpatterns = [
     path('logout', logout_view, name='logout'),
     path('', RedirectView.as_view(url='login/', permanent=True)),
     path('users/<int:userId>/recipes/', UserRecipeList.as_view(), name='user-recipes'),  
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
