@@ -54,11 +54,6 @@ export class RecipeService {
     return this.http.get<Recipe>(`${this.apiUrl}recipes/${id}/`);
   }
 
-  // updateRecipe(id: number, recipeData: Recipe): Observable<Recipe> {
-  //   // Add the necessary HTTP headers here
-  //   return this.http.put<Recipe>(`${this.apiUrl}recipes/${id}/`, recipeData);
-  // }
-
   deleteRecipe(id: number): Observable<any> {
     // Add the necessary HTTP headers here
     return this.http.delete(`${this.apiUrl}recipes/${id}/`);
@@ -68,6 +63,15 @@ export class RecipeService {
     // Do not set the enctype or Content-Type headers manually
     return this.http.put<Recipe>(`${this.apiUrl}recipes/${recipeId}/`, formData);
   }
+
+
+
+ // recipe.service.ts
+  getRecipesByCuisine(cuisineId: number): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.apiUrl}recipes/cuisine/${cuisineId}/`);
+  }
+
+
   
 
 

@@ -20,6 +20,7 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Adjust the path based on your project structure
 import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
+import { CuisinesRecipesComponent } from './cuisines-recipes/cuisines-recipes.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
     AddRecipeComponent,
     RecipeDetailComponent,
     UpdateDialogComponent,
+    CuisinesRecipesComponent,
   ],
   imports: [
     BrowserModule,

@@ -181,3 +181,30 @@ def change_password(request):
         return Response({'message': 'Password changed successfully'}, status=status.HTTP_200_OK)
     else:
         return Response({'error': 'Wrong current password'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+# def recipes_by_cuisine(request, cuisine_id):
+#     # Filter recipes by cuisine
+#     recipes = Recipe.objects.filter(cuisine__id=cuisine_id)
+#     serializer = RecipeSerializer(recipes, many=True)
+#     return Response(serializer.data)
+# @api_view(['GET'])
+# def recipes_by_cuisine(request, cuisine_id):
+#     # Filter recipes by the provided cuisine ID
+#     recipes = Recipe.objects.filter(cuisine__id=cuisine_id)
+#     # Convert to a list of dictionaries
+#     recipes_list = [model_to_dict(recipe) for recipe in recipes]
+#     # Return as JSON
+#     return JsonResponse(recipes_list, safe=False)
+
+
+@api_view(['GET'])
+def recipes_by_cuisine(request, cuisine_id):
+    try:
+        recipes = Recipe.objects.filter(cuisine_id=cuisine_id)
+        serializer = RecipeSerializer(recipes, many=True)
+        return Response(serializer.data)
+    except Recipe.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
