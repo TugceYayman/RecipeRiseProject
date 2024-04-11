@@ -101,19 +101,7 @@ getCuisineIdByName(cuisineName: string): number | null {
     );
   }
 
-  // onCuisineSelected(cuisineId: number): void {
-  //   const id = Number(cuisineId); // Convert the string to a number
-  //   this.selectedCuisineId = id;
-  //   console.log(cuisineId);
-  //   this.recipeService.getRecipesByCuisine(cuisineId).subscribe(
-  //     (recipes) => {
-  //       this.recipes = recipes;
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching recipes by cuisine:', error);
-  //     }
-  //   );
-  // }
+
 
   onCuisineSelected(cuisineId: number): void {
     this.selectedCuisineId = cuisineId;
