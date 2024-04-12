@@ -13,6 +13,7 @@ import { UpdateDialogComponent } from '../update-dialog/update-dialog.component'
 })
 export class RecipeDetailComponent implements OnInit {
 
+  loggedInUserId: number | null = null;
   recipeId!: number; //!(postfix : definite assignment assertion oparetor) tells ts that i am certain that the variable will be assigned before it is used
   recipe!: Recipe ;
   isLoading: boolean = false;
@@ -21,6 +22,7 @@ export class RecipeDetailComponent implements OnInit {
   selectedFile: File | null = null; // Make sure this is set when a file is selected
   isEditMode = false;
   imagePreviewUrl: string | ArrayBuffer | null = null; // This will hold the image preview URL
+  isEditable!: boolean;
 
   constructor(
     private recipeService: RecipeService,
@@ -37,9 +39,16 @@ export class RecipeDetailComponent implements OnInit {
       console.error('No valid recipe ID provided');
       return;
     }
-    
+    this.loggedInUserId = this.getLoggedInUserId();
     this.fetchRecipe();
-  }  
+  } 
+  
+  getLoggedInUserId(): number | null {
+    // Parse the user ID you've stored in local storage (or where you store it)
+    const userId = localStorage.getItem('userId');
+    return userId ? Number(userId) : null;
+  }
+
 
   fetchRecipe() {
     this.isLoading = true;
@@ -54,6 +63,14 @@ export class RecipeDetailComponent implements OnInit {
         this.isLoading = false;
       }
     );
+    if (this.recipe && this.loggedInUserId === this.recipe.user) {
+      this.isEditable = true; // You would define 'isEditable' in your component
+    }
+  }
+
+  canEditOrDelete(): boolean {
+    // Compare the logged-in user ID with the recipe's user ID
+    return this.loggedInUserId === this.recipe?.user;
   }
 
 

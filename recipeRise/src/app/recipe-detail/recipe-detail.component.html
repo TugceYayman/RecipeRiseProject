@@ -10,12 +10,12 @@
   <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
   <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
 
-  <button class="btn btn-primary" (click)="toggleEdit(true)">Edit Recipe</button>
-  <button class="btn btn-danger" (click)="deleteRecipe(recipe.id)">Delete Recipe</button>
+  <button *ngIf="canEditOrDelete()" (click)="toggleEdit(true)">Edit Recipe</button>
+  <button *ngIf="canEditOrDelete()" (click)="deleteRecipe(recipe.id)">Delete Recipe</button>
 </div>
 
 <!-- Edit Mode -->
-<div *ngIf="isEditMode && recipe && !isLoading" class="recipe-details">
+<div *ngIf="isEditMode && canEditOrDelete() &&  recipe && !isLoading" class="recipe-details">
   <form #recipeForm="ngForm" (ngSubmit)="updateRecipe()" enctype="multipart/form-data">
     <div class="form-group">
       <label for="recipeTitle">Title</label>
