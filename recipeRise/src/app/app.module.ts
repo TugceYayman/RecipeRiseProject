@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
 import { CuisinesRecipesComponent } from './cuisines-recipes/cuisines-recipes.component';
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { CuisinesRecipesComponent } from './cuisines-recipes/cuisines-recipes.co
     RecipeDetailComponent,
     UpdateDialogComponent,
     CuisinesRecipesComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

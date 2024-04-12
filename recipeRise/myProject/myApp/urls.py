@@ -18,6 +18,7 @@ urlpatterns = [
     path('login/', api_login, name='login'),
     path('logout', logout_view, name='logout'),
     path('', RedirectView.as_view(url='login/', permanent=True)),
+     path('search/', views.search, name='search'), 
     path('users/change_password/', views.change_password, name='change_password'),
     path('recipes/cuisine/<int:cuisine_id>/', views.recipes_by_cuisine, name='recipes_by_cuisine'),
     path('users/<int:userId>/recipes/', UserRecipeList.as_view(), name='user-recipes'),  

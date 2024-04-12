@@ -8,21 +8,23 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  searchQuery: string = '';
+  
   constructor(private authService: AuthService, private router: Router) { }
   
-  // logout() {
-  //   this.authService.logout().subscribe(() => {
-  //     this.router.navigate(['/login']); // Adjust the route as needed
-  //   }, error => {
-  //     console.error('Logout failed', error);
-  //   });
-  // }
-  // In your component, e.g., NavbarComponent
+
   logout() {
     this.authService.logout();
     // Since the authService.logout() doesn't handle  navigation, do it here
     this.router.navigate(['/login']); // Adjust the route as needed
-}
+  }
+  
+  onSearch(): void {
+    if (!this.searchQuery.trim()) return; // If empty query, do nothing
+
+    // Navigate to the search results route with the query as a parameter
+    this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
+  }
 
 
 }

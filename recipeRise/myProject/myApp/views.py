@@ -17,6 +17,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.hashers import check_password, make_password
+from django.http import JsonResponse
+from django.db.models import Q
 
 
 
@@ -192,3 +194,19 @@ def recipes_by_cuisine(request, cuisine_id):
         return Response(serializer.data)
     except Recipe.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        recipes = Recipe.objects.filter(
+            Q(title__icontains=query) |
+            Q(cuisine__name__icontains=query) |
+            Q(ingredients__icontains=query)
+        )
+        serializer = RecipeSerializer(recipes, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    else:
+        recipes = Recipe.objects.all() # or however you want to handle no query being present
+        serializer = RecipeSerializer(recipes, many=True)
+        return JsonResponse(serializer.data, safe=False)
