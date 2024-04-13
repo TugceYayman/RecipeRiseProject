@@ -72,8 +72,16 @@ export class RecipeService {
   }
 
 
-  
+  saveRecipeForUser(userId: number, recipeId: number): Observable<any> {
+    // Adjust the URL and endpoint as needed for your backend setup.
+    const url = `http://localhost:8000/users/${userId}/save_recipe/${recipeId}/`;
+    return this.http.post(url, {});
+  }
 
+  
+  getSavedRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>('http://localhost:8000/users/saved_recipes/');
+  }
 
   
 

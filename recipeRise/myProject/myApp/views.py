@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .models import CustomUser  
 from .serializers import CustomUserSerializer
@@ -9,8 +9,8 @@ from rest_framework import status
 from django.contrib.auth import logout
 from rest_framework.exceptions import ValidationError
 from rest_framework import generics, permissions
-from .models import Recipe, Cuisine
-from .serializers import RecipeSerializer, CuisineSerializer
+from .models import Recipe, Cuisine, SavedRecipe
+from .serializers import RecipeSerializer, CuisineSerializer, SavedRecipeSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 from django.views.decorators.csrf import csrf_exempt
@@ -19,6 +19,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.hashers import check_password, make_password
 from django.http import JsonResponse
 from django.db.models import Q
+from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -210,3 +211,47 @@ def search(request):
         recipes = Recipe.objects.all() # or however you want to handle no query being present
         serializer = RecipeSerializer(recipes, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def save_recipe(request, user_id, recipe_id):
+    if request.method == 'POST':
+        try:
+            recipe = Recipe.objects.get(pk=recipe_id)
+            saved_recipe, created = SavedRecipe.objects.get_or_create(
+                user=request.user, 
+                recipe=recipe
+            )
+            
+            if created:
+                # Recipe was saved successfully
+                serializer = SavedRecipeSerializer(saved_recipe)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                # Recipe was already saved
+                return Response(
+                    {'message': 'Recipe was already saved.'}, 
+                    status=status.HTTP_200_OK
+                )
+        except Recipe.DoesNotExist:
+            return Response(
+                {'message': 'Recipe does not exist.'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+    else:
+        return Response(
+            {'message': 'Invalid request method.'}, 
+            status=status.HTTP_405_METHOD_NOT_ALLOWED
+        )
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_saved_recipes(request):
+    user = request.user
+    saved_recipes = SavedRecipe.objects.filter(user=user)
+    serializer = RecipeSerializer(saved_recipes, many=True)
+    return Response(serializer.data)

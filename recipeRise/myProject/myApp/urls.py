@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
 from . import views
-from .views import api_signup, api_login, logout_view, RecipeListCreateView, RecipeDetailView,CuisineList, UserRecipeList, recipes_by_cuisine 
+from .views import api_signup, api_login, logout_view, RecipeListCreateView, RecipeDetailView,CuisineList, UserRecipeList, recipes_by_cuisine, save_recipe, list_saved_recipes
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -18,8 +18,10 @@ urlpatterns = [
     path('login/', api_login, name='login'),
     path('logout', logout_view, name='logout'),
     path('', RedirectView.as_view(url='login/', permanent=True)),
-     path('search/', views.search, name='search'), 
-    path('users/change_password/', views.change_password, name='change_password'),
+     path('users/saved_recipes/', list_saved_recipes, name='saved-recipes'),
+    path('users/<int:user_id>/save_recipe/<int:recipe_id>/', views.save_recipe, name='save_recipe'),
+    path('search/', views.search, name='search'), 
+    path('users/<int:user_id>/save_recipe/<int:recipe_id>/', save_recipe, name='save_recipe'),
     path('recipes/cuisine/<int:cuisine_id>/', views.recipes_by_cuisine, name='recipes_by_cuisine'),
     path('users/<int:userId>/recipes/', UserRecipeList.as_view(), name='user-recipes'),  
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

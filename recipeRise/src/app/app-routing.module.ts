@@ -8,11 +8,13 @@ import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { CuisinesRecipesComponent } from './cuisines-recipes/cuisines-recipes.component'
 import { SearchComponent } from './search/search.component';
+import { SavedRecipesComponent } from './saved-recipes/savedrecipes.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'recipe-list', component: RecipeListComponent },
+  { path: 'saved-recipes', component: SavedRecipesComponent },
   { path: 'profile-page', component: ProfilePageComponent },
   { path: 'search', component: SearchComponent },
   { path: 'login', component: LoginComponent },

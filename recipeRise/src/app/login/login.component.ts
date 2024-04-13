@@ -18,11 +18,13 @@ export class LoginComponent {
     
     this.authService.login(this.usernameOrEmail, this.password).subscribe(
       data => {
+        this.authService.storeToken(data.token);
         console.log('Login success', data);
-
+        
       
          const userIdKey = 'userID'; // Change this to match the key in the response
-         const userId = Number(data[userIdKey]);
+        const userId = Number(data[userIdKey]);
+         
         
         // // Check if the parsed ID is a number
         // if (Number.isNaN(userId)) {

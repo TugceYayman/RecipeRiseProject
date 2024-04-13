@@ -68,3 +68,13 @@ class Recipe(models.Model):
 
 
 
+class SavedRecipe(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='saved_recipes')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='users_saved')
+    saved_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'recipe')  # Prevents duplicate saves
+
+    def __str__(self):
+        return f"{self.user.username} saved {self.recipe.title}"

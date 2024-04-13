@@ -4,6 +4,7 @@ import { RecipeService } from '../recipe.service';
 import { Recipe } from '../models/recipe.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class RecipeDetailComponent implements OnInit {
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService,
     private dialog: MatDialog,
   )
   { this.formData = new FormData(); }
@@ -185,6 +187,33 @@ export class RecipeDetailComponent implements OnInit {
         });
         this.isLoading = false;
       },
+    });
+  }
+  
+
+  saveRecipe(recipeId: number): void {
+    // Ensure that we have a logged-in user ID before attempting to save.
+    if (!this.authService.isLoggedIn()) {
+      alert('You must be logged in to save recipes.');
+      return;
+    }
+  
+    // Here, we assert that loggedInUserId is non-null.
+    // The '!' non-null assertion operator at the end of 'this.loggedInUserId!' tells TypeScript that we're certain 'loggedInUserId' is not null.
+    const userId = this.loggedInUserId!;
+  
+    this.isLoading = true;
+  
+    this.recipeService.saveRecipeForUser(userId, recipeId).subscribe({
+      next: (data) => {
+        console.log('Recipe saved successfully', data);
+        // Implement any additional logic after saving
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error saving recipe:', error);
+        this.isLoading = false;
+      }
     });
   }
   

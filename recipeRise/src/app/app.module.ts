@@ -22,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
 import { CuisinesRecipesComponent } from './cuisines-recipes/cuisines-recipes.component';
 import { SearchComponent } from './search/search.component';
+import { RouterModule } from '@angular/router';
+import { SavedRecipesComponent } from './saved-recipes/savedrecipes.component';
 
 
 @NgModule({
@@ -40,6 +42,7 @@ import { SearchComponent } from './search/search.component';
     UpdateDialogComponent,
     CuisinesRecipesComponent,
     SearchComponent,
+    SavedRecipesComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { SearchComponent } from './search/search.component';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule, // Add FormsModule to the imports array
+    RouterModule,
     MatDialogModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },],

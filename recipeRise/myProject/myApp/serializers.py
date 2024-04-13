@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from myApp.models import CustomUser, Recipe, Cuisine
+from myApp.models import CustomUser, Recipe, Cuisine,SavedRecipe 
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -69,3 +69,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         
         instance.save()
         return instance
+
+class SavedRecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SavedRecipe
+        fields = ['id', 'user', 'recipe']
