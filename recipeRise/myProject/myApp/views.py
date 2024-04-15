@@ -251,7 +251,6 @@ def save_recipe(request, user_id, recipe_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_saved_recipes(request):
-    user = request.user
-    saved_recipes = SavedRecipe.objects.filter(user=user)
-    serializer = RecipeSerializer(saved_recipes, many=True)
+    saved_recipes = SavedRecipe.objects.filter(user=request.user)
+    serializer = SavedRecipeSerializer(saved_recipes, many=True)
     return Response(serializer.data)

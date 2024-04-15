@@ -71,6 +71,18 @@ class RecipeSerializer(serializers.ModelSerializer):
         return instance
 
 class SavedRecipeSerializer(serializers.ModelSerializer):
+    # Nest the RecipeSerializer to serialize the related Recipe instance.
+    recipe = RecipeSerializer(read_only=True)
+
     class Meta:
         model = SavedRecipe
-        fields = ['id', 'user', 'recipe']
+        fields = ['id', 'recipe']  # 'recipe' is the related Recipe instance
+
+    def to_representation(self, instance):
+        # Override the to_representation to customize the output.
+        representation = super(SavedRecipeSerializer, self).to_representation(instance)
+        recipe_representation = representation.pop('recipe')
+        for key in recipe_representation:
+            # This will add all fields from the recipe to the representation.
+            representation[key] = recipe_representation[key]
+        return representation
