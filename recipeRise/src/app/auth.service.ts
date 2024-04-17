@@ -12,6 +12,17 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  getLoggedInUserId(): number | null {
+    const token = this.getToken();
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.user.id;
+    } else {
+      return null;
+    }
+  }
+  
+
   login(username: string, password: string) {
     const loginUrl = `${this.apiUrl}login/`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); // Specify JSON headers

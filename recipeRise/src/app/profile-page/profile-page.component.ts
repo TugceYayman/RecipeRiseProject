@@ -4,6 +4,7 @@ import { Recipe } from '../models/recipe.model'; // Import your Recipe model
 import { AuthService } from '../auth.service'; 
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-profilePage',
@@ -17,9 +18,75 @@ export class ProfilePageComponent implements OnInit {
   currentPassword!: string;
   newPassword!: string;
   confirmPassword!: string;
+  selectedProfilePic!: File;
+  profilePicturePath: any;
 
   // Inject the RecipeService in the constructor
-  constructor(private recipeService: RecipeService, private authService: AuthService, public dialog: MatDialog) { }
+  constructor(private userService: UserService, private recipeService: RecipeService, private authService: AuthService, public dialog: MatDialog) { }
+  
+
+  openFileSelector(): void {
+    document.getElementById('profilePictureInput')?.click();
+  }
+  
+  onFileSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (file) {
+      // Assuming you have the user ID available
+      const userId = localStorage.getItem('userId'); // Retrieve the user ID from local storage
+  
+      if (userId) {
+        const key = `profilePicture_${userId}`;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const image = document.getElementById('selectedProfilePic') as HTMLImageElement;
+          image.src = e.target.result;
+          
+          // Save the image to local storage with a key specific to the user
+          localStorage.setItem(key, e.target.result);
+        };
+        reader.readAsDataURL(file);
+        
+        // Keep the file for saving
+        this.selectedProfilePic = file;
+      } else {
+        console.error('User ID not found in local storage');
+      }
+    }
+  }
+  
+  
+  
+  
+  saveProfilePicture(): void {
+    const loggedInUserId = this.authService.getLoggedInUserId();
+    if (this.selectedProfilePic && loggedInUserId) {
+      this.userService.updateProfilePicture(loggedInUserId, this.selectedProfilePic)
+        .subscribe({
+          next: (response) => {
+            console.log('Profile picture updated successfully');
+            // Handle successful update, like updating the image path in the component
+          },
+          error: (error) => console.error('Error updating profile picture', error)
+        });
+    }
+  }
+  
+
+  selectProfilePicture(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      // Assuming you want to immediately display the selected image
+      const reader = new FileReader();
+      reader.onload = (e: any) => this.profilePicturePath = e.target.result;
+      reader.readAsDataURL(file);
+      
+      // Keep the file for the save function
+      this.selectedProfilePic = file;
+    }
+  }
+  
 
 
 
@@ -70,15 +137,25 @@ export class ProfilePageComponent implements OnInit {
       console.log('Numeric User ID:', numericUserId); // Debugging line
   
       if (!isNaN(numericUserId)) {
+        // Retrieve recipes by user ID
         this.recipeService.getRecipesByUser(numericUserId).subscribe(
           (data: Recipe[]) => {
             console.log('Fetched recipes:', data); // Debugging line
             this.recipes = data;
           },
           (error) => {
-            console.error('Error fetching recipes:',numericUserId, error);
+            console.error('Error fetching recipes:', numericUserId, error);
           }
         );
+  
+        // Retrieve the saved profile picture for the user from local storage
+        const key = `profilePicture_${userId}`;
+        const savedProfilePicture = localStorage.getItem(key);
+        if (savedProfilePicture) {
+          // Set the profile picture source
+          const image = document.getElementById('selectedProfilePic') as HTMLImageElement;
+          image.src = savedProfilePicture;
+        }
       } else {
         console.error('User ID is not a valid number');
       }
@@ -86,6 +163,7 @@ export class ProfilePageComponent implements OnInit {
       console.error('User ID not found in local storage');
     }
   }
+  
   
   truncateInstructions(instructions: string): string {
     const words = instructions.split(' ', 41); // Split into words

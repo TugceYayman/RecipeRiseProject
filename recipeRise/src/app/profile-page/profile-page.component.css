@@ -119,4 +119,23 @@
     text-decoration: none; /* Remove underline from links on hover */
 }
 
+
+.profile-picture-frame {
+    width: 170px; /* Same width as the image */
+    height: 170px; /* Same height as the image */
+    background-color: #e0e0e0; /* Neutral background color */
+    border-radius: 50%; /* Rounded border */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Ensure the content doesn't overflow */
+}
+
+.profile-picture-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image fills the frame */
+}
+
+
 /* Since you don't want a media query, I'm leaving that out */

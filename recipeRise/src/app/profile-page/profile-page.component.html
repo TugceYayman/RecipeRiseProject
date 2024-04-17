@@ -17,15 +17,17 @@
                     <div class="profile-userpic my-3">
                         <img width="170px" height="170px" src="/assets/images/bolognese.jpeg" class="img-fluid rounded-circle" alt="User Image" id="selectedProfilePic">
                     </div>
-                    <div class="profile-usertitle ms-3">
+                      <div class="profile-usertitle ms-3">
                         <div class="profile-usertitle-name">
                             <h1>Hi, {{username}} </h1>
                         </div>
                     </div>
                 </div>
                 <!-- Button to trigger modal -->
-                <button type="button" class="changeButton" data-bs-toggle="modal" data-bs-target="#profilePictureModal">
-                  Change Profile Picture
+                <!-- Button to trigger file selector -->
+                <input type="file" accept="image/*" id="profilePictureInput" style="display: none;" (change)="onFileSelect($event)">
+                <button type="button" class="changeButton" (click)="openFileSelector()">
+                    Change Profile Picture
                 </button>
                 <nav class="profile-usermenu">
                   <ul class="nav flex-column">
@@ -131,58 +133,6 @@
             </div> 
     </div>
 </div>
-
-
-<!-- Profile Picture Selection Modal -->
-<div class="modal fade" id="profilePictureModal" tabindex="-1" aria-labelledby="profilePictureModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="profilePictureModalLabel">Choose Profile Picture</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Profile picture options -->
-        <div class="d-flex flex-wrap">
-          <img src="/assets/images/bolognese.jpeg" alt="Profile 1" class="img-thumbnail m-1 selectable-image" onclick="selectProfilePicture('image1.jpg')">
-          <img src="/assets/images/bolognese.jpeg" alt="Profile 2" class="img-thumbnail m-1 selectable-image" onclick="selectProfilePicture('image2.jpg')">
-          <!-- Add more images as needed -->
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-
-  function selectProfilePicture(imageSrc) {
-      // Update the profile picture on the page
-      document.getElementById('selectedProfilePic').src = imageSrc;
-  }
-  function showSection(sectionId) {
-    // Hide all content blocks
-    var contentBlocks = document.getElementsByClassName('content-block');
-    for (var i = 0; i < contentBlocks.length; i++) {
-        contentBlocks[i].style.display = 'none';
-    }
-    
-    // Show the selected content block
-    document.getElementById(sectionId).style.display = 'block';
-    
-    // Update the active navigation link
-    var navLinks = document.getElementsByClassName('nav-link');
-    for (var j = 0; j < navLinks.length; j++) {
-        navLinks[j].classList.remove('active');
-    }
-    event.currentTarget.classList.add('active');
-}
-
-</script>
 <app-footer></app-footer>
-
 </body>
 </html>
