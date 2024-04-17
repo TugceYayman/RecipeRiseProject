@@ -1,9 +1,9 @@
 .allRecipes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    column-gap: 20px;
-    position: relative;
+    justify-content: space-around; /* Evenly space the cards with space around them */
+    gap: 20px; /* Space between cards */
+    position: relative; /* Context for absolute positioning */
 }
 
 .allRecipes::before {
@@ -14,28 +14,94 @@
     left: 50%;
     width: 2px;
     background-color: #ddd; /* Light gray shade */
+    display: none; /* Hide by default, we'll show it only on wide screens */
 }
-/* Hide the divider on screens smaller than tablets (768px) */
-@media (max-width: 1048px) {
-    .allRecipes::before {
-        display: none;
-    }
-}
-
 .card {
-    border-radius: 1.6em;
+    background-color: #dcecec;
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
+    display: flex;
+    flex-direction: column; /* Organize content vertically */
+    overflow: hidden; /* Ensures content does not overflow rounded corners */
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Larger shadow for a "lifted" effect */
+    transform: scale(1.03); /* Slightly scale up the card */
 }
 
-#speciality-info:hover {
-    color: grey;
+.card-img-container {
+    height: 200px; /* Fixed height for image container */
+    overflow: hidden; /* Hide overflow */
+    display: flex; /* Using flex to center the image */
+    justify-content: center; /* Center image horizontally */
+    align-items: center; /* Center image vertically */
 }
 
-#speciality-info {
-    margin-bottom: 2rem;
+.card-img {
+    max-width: 100%; /* Ensures image is not wider than container */
+    max-height: 100%; /* Ensures image is not taller than container */
+    width: auto; /* Maintains aspect ratio */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: cover; /* Cover the area without stretching */
 }
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.25rem; /* Larger font size for the title */
+}
+
+.card-text {
+    font-size: 1rem; /* Appropriate font size for card text */
+}
+
+.btn-outline-secondary {
+    border-color: #a8d1d1;
+    color: #a8d1d1;
+    margin-top: auto; /* Pushes the button to the bottom of the card */
+}
+
+.btn-outline-secondary:hover {
+    border-color: #8fb0b2;
+    color: #8fb0b2; /* Darker shade on hover */
+}
+
+
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1048px) {
+    .allRecipes::before {
+        display: none; /* Hides the divider on smaller screens */
+    }
+
+    .allRecipes {
+        justify-content: center; /* Centers cards on smaller screens */
+    }
+
+    .card {
+        width: 100%; /* Full width cards on smaller screens */
+        margin-bottom: 20px; /* Space below each card */
+    }
+}
+
+@media (min-width: 1200px) {
+    .allRecipes::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%); /* Center the divider */
+        height: 100%;
+        width: 2px;
+        background-color: #ddd; /* Light gray shade */
+        display: block;
+    }
+}
+
+
+

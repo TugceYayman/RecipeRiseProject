@@ -196,6 +196,28 @@ button {
   transform: translateY(-2px);
 }
 
+.save-recipe-btn {
+  background-color: #d9f0f0; /* Light blue background color */
+  color: #333; /* Dark text color */
+  border: none; /* No border */
+  padding: 10px 20px; /* Padding */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Cursor style */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and scaling */
+  display: flex; /* Display as flex */
+  align-items: center; /* Center items vertically */
+}
+
+.save-recipe-btn svg {
+  margin-right: 5px; /* Margin between icon and text */
+}
+
+.save-recipe-btn:hover {
+  background-color: #b8d8d8; /* Darker shade of light blue on hover */
+  transform: scale(1.05); /* Scale up the button on hover */
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .recipe-details {
@@ -221,7 +243,6 @@ button {
   }
 }
 
-/* Utility classes */
 .mt-1 {
   margin-top: 1rem;
 }
@@ -233,5 +254,5 @@ button {
 .p-1 {
   padding: 1rem;
 }
-/* Ensure you replace the placeholder `path-to-your-background-image.jpg` with the actual path to your desired background image, and adjust the font family to match your application's design. */
+
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../models/recipe.model'; // Adjust the path as necessary
 import { Cuisine } from '../cuisine.model';
+import { Router } from '@angular/router';
 
 declare global {
   interface FormData {
@@ -24,7 +25,7 @@ export class AddRecipeComponent implements OnInit  {
 
   cuisines: Cuisine[] = [];
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService, private router: Router) { }
 
   ngOnInit() {
     this.fetchCuisines();
@@ -67,6 +68,7 @@ export class AddRecipeComponent implements OnInit  {
       next: (response) => {
         console.log(response);
         alert('Recipe added successfully');
+        this.router.navigate(['/profile-page']);
         // Redirect or clear form here
       },
       error: (error) => {

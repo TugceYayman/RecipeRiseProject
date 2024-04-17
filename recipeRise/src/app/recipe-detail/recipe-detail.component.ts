@@ -57,6 +57,9 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.getRecipeById(this.recipeId).subscribe(
       (data: Recipe) => {
         this.recipe = data;
+        if (this.recipe && this.loggedInUserId === this.recipe.user) {
+          this.isEditable = true; // You would define 'isEditable' in your component
+        }
         this.isLoading = false;
       },
       (error) => {
@@ -65,10 +68,8 @@ export class RecipeDetailComponent implements OnInit {
         this.isLoading = false;
       }
     );
-    if (this.recipe && this.loggedInUserId === this.recipe.user) {
-      this.isEditable = true; // You would define 'isEditable' in your component
-    }
   }
+  
 
   canEditOrDelete(): boolean {
     // Compare the logged-in user ID with the recipe's user ID
@@ -197,30 +198,39 @@ export class RecipeDetailComponent implements OnInit {
   
 
   saveRecipe(recipeId: number): void {
-    // Ensure that we have a logged-in user ID before attempting to save.
     if (!this.authService.isLoggedIn()) {
       alert('You must be logged in to save recipes.');
       return;
     }
   
-    // Here, we assert that loggedInUserId is non-null.
-    // The '!' non-null assertion operator at the end of 'this.loggedInUserId!' tells TypeScript that we're certain 'loggedInUserId' is not null.
     const userId = this.loggedInUserId!;
   
     this.isLoading = true;
   
     this.recipeService.saveRecipeForUser(userId, recipeId).subscribe({
       next: (data) => {
-        console.log('Recipe saved successfully', data);
-        // Implement any additional logic after saving
+        if (data && data.message === 'Recipe was already saved.') {
+          this.dialog.open(UpdateDialogComponent, {
+            data: { title: 'Info', message: 'Recipe was already saved!' },
+          });
+        } else {
+          this.dialog.open(UpdateDialogComponent, {
+            data: { title: 'Success', message: 'Recipe saved successfully!' },
+          });
+        }
         this.isLoading = false;
       },
       error: (error) => {
         console.error('Error saving recipe:', error);
+        this.dialog.open(UpdateDialogComponent, {
+          data: { title: 'Error', message: 'Error saving recipe!' },
+        });
         this.isLoading = false;
       }
     });
   }
+  
+  
   
 
   
