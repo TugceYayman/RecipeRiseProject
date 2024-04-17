@@ -1,53 +1,102 @@
+.recipe-list-title {
+    text-align: center;
+    font-weight: 500; /* Adjust the font weight to your preference */
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 2rem; /* Adjust the size as needed */
+}
 
-
-/* Style the cards with a nice border-radius and a hover effect */
-.card {
+.recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between cards */
+    justify-content: center; /* Center cards within the container */
+    padding: 20px; /* Padding around the container */
+    max-width: 1200px; /* Max width of the container */
+    margin: auto; /* Center container on the page */
+}
+.recipe-card {
     background-color: #dcecec;
-    border-radius: 1.6em;
-    overflow: hidden; /* This makes sure that children (like images) do not overflow the rounded corners */
+    border-radius: 15px; /* Increased border radius for rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 20px); /* Adjust width for two cards per row, accounting for gap */
+    margin-bottom: 20px; /* Space below each card */
     transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions for hover effects */
+    display: flex;
+    flex-direction: column; /* Organize content vertically */
+    align-items: center; /* Center items horizontally */
+    max-width: 450px; /* Decreased maximum width to make the card smaller */
 }
 
-/* Add the hover effect for the card */
-.card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly larger shadow to lift the card */
-    transform: scale(1.02); /* Slightly scale up the card */
+.recipe-image {
+    width: 100%; /* Full width of the card */
+    display: block;
+    overflow: hidden; /* Prevents image overflow */
 }
 
-/* Additional styles for content inside the card */
-.card-body {
-    padding: 16px; /* Adjust padding as needed */
+.recipe-image img {
+    width: 100%; /* Image width is 100% of its container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the area without stretching */
+    max-height: 300px; /* Maximum height for images */
 }
 
-.card-title {
-    margin-bottom: 0.5rem; /* Space between the title and the content */
+.recipe-details {
+    padding: 15px;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align text to the start */
+    justify-content: space-between; /* Distribute space evenly */
 }
 
-.card-text {
-    color: #333; /* Darker text color for better readability */
-    margin-bottom: 1rem; /* Space between the text and the bottom of the card */
+.recipe-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
 }
 
-/* Style the view recipe button */
-.btn-outline-secondary {
-    border-color: #a8d1d1;
-    color: #a8d1d1;
+
+.recipe-title {
+    font-size: 1.25rem; /* Larger font size for the title */
+    margin-bottom: 10px;
 }
 
-.btn-outline-secondary:hover {
-    border-color: #8fb0b2;
-    color: #8fb0b2; /* Darker shade on hover */
-    text-decoration: none; /* Remove underline from links on hover */
+.recipe-card .card-body {
+    display: flex;
+    flex-direction: column;
 }
 
-.my-saved-recipes-header {
-    font-weight: bold; /* Make the font bold */
-    padding: 10px; /* Add some padding */
-    background-color: #f8f9fa; /* A light grey background */
-    border-radius: 8px; /* Rounded corners for the background */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* A subtle shadow to lift the header off the page */
-    margin-bottom: 30px; /* Add some space below the header */
-     /*border-left: 5px solid  #8fb0b2; A blue accent bar on the left */
-    color: #818589;
-  }
-  
+
+.recipe-text {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    color: #555;
+    width: 100%; /* Make the text cover the width of the card */
+}
+
+
+.recipe-cuisine {
+    font-style: italic; /* Italicize the cuisine */
+    margin-bottom: 15px;
+}
+
+.recipe-btn {
+    background: #a8d1d1;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners for the button */
+    font-weight: bold; /* Make the button text bold */
+    align-self: left; /* Center button in the details area */
+    margin-top: auto; /* Push button to bottom */
+    width: fit-content; /* Fit the content's width */
+}
+
+/* Add other styles for title, text, and button as previously defined */
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .recipe-card {
+        width: 100%;
+        max-width: none;  /* Full width on smaller screens */
+    }
+}

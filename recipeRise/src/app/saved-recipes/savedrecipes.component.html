@@ -1,24 +1,27 @@
 <app-navbar></app-navbar>
-<div *ngIf="isLoading">Loading...</div>
-<!-- Add your header inside a container for proper spacing -->
-<div class="container my-4">
-  <h1 class="display-5 text-center my-saved-recipes-header" >My Saved Recipes</h1>
+<div *ngIf="isLoading" class="recipe-container">
+  <div class="recipe-card">
+    <div>Loading...</div>
+  </div>
 </div>
 
+<div class="container my-4">
+  <h1 class="display-5 text-center recipe-list-title">My Saved Recipes</h1>
+</div>
 
 <div *ngIf="!isLoading">
-  <div *ngIf="savedRecipes.length > 0; else noSavedRecipesTemplate">
-    <div *ngFor="let recipe of savedRecipes" class="card my-3" style="background-color: #dcecec">
+  <div *ngIf="savedRecipes.length > 0; else noSavedRecipesTemplate" class="recipe-container">
+    <div *ngFor="let recipe of savedRecipes" class="recipe-card card my-3" style="background-color: #dcecec">
       <div class="row g-0">
-        <div class="col-md-4">
+        <div class="col-md-4 recipe-image">
           <img [src]="sharedService.getFullImageUrl(recipe.image)" alt="Recipe image" class="img-fluid rounded-start" style="height: 250px; object-fit: cover;">
         </div>
-        <div class="col-md-8">
+        <div class="col-md-12 recipe-details">
           <div class="card-body">
-            <h5 class="card-title">{{ recipe.title }}</h5>
-            <p class="card-text">{{ sharedService.truncateInstructions(recipe.instructions) }}</p>
-            <p class="card-text">Cuisine: {{ recipe.cuisine_name }}</p>
-            <a [routerLink]="['/recipes', recipe.id]" class="btn btn-outline-secondary">View Recipe</a>
+            <h5 class="card-title recipe-title">{{ recipe.title }}</h5>
+            <p class="card-text recipe-text">{{ sharedService.truncateInstructions(recipe.instructions) }}</p>
+            <p class="card-text recipe-cuisine">Cuisine: {{ recipe.cuisine_name }}</p>
+            <a [routerLink]="['/recipes', recipe.id]" class="btn btn-outline-secondary recipe-btn">View Recipe</a>
           </div>
         </div>
       </div>
@@ -27,5 +30,11 @@
 </div>
 
 <ng-template #noSavedRecipesTemplate>
-  <p>No saved recipes found.</p>
+  <div class="recipe-container">
+    <div class="recipe-card">
+      <p>No saved recipes found.</p>
+    </div>
+  </div>
 </ng-template>
+
+<app-footer></app-footer>

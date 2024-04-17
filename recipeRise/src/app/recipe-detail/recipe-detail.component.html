@@ -31,7 +31,7 @@
     <div class="form-group image-upload-container">
       <label for="recipeImage" class="label-for-image">Recipe Image</label>
       <input type="file" id="recipeImage" name="image" (change)="onFileSelected($event)" [required]="!recipe.image">
-      <div *ngIf="imagePreviewUrl || recipe.image" class="image-preview">
+      <div *ngIf="imagePreviewUrl || recipe.image" class="image-preview ">
         <img [src]="imagePreviewUrl || getFullImageUrl(recipe.image)" alt="Current Recipe Image" class="current-recipe-image">
       </div>
     </div>

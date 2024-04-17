@@ -21,16 +21,23 @@ from django.http import JsonResponse
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 import random
+from django.db.models import Max
 
 
 
 def random_recipes(request):
-    recipes_count = Recipe.objects.count()
-    random_ids = random.sample(range(1, recipes_count+1), 10) # Adjust the range according to your IDs
-    random_recipes = Recipe.objects.filter(id__in=random_ids)
-    data = list(random_recipes.values()) # Or use a serializer if you're using Django Rest Framework
-    return JsonResponse(data, safe=False)
+    # Ensure the 'Max' function is imported from 'django.db.models'
+    max_id = Recipe.objects.aggregate(max_id=Max("id"))['max_id']
+    random_ids = set()
+    
+    while len(random_ids) < 10:
+        pk = random.randint(1, max_id)
+        if Recipe.objects.filter(pk=pk).exists():
+            random_ids.add(pk)
 
+    random_recipes = Recipe.objects.filter(id__in=random_ids)
+    data = list(random_recipes.values())
+    return JsonResponse(data, safe=False)
 
 @api_view(['POST'])
 def api_signup(request):

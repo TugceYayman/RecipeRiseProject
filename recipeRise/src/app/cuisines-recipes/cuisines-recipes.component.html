@@ -1,23 +1,29 @@
-<!-- This assumes you have a 'recipes' array in your component and a sharedService that provides image URLs and truncated instructions -->
 <app-navbar></app-navbar>
-<div *ngIf="recipes.length > 0; else noRecipesTemplate">
-  <div *ngFor="let recipe of recipes" class="card my-3" style="background-color: #dcecec">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img [src]="sharedService.getFullImageUrl(recipe.image)" alt="Recipe image" class="img-fluid rounded-start" style="height: 250px; object-fit: cover;">
+
+<!-- Dynamic title for the recipe list -->
+<!-- Assuming 'recipes' array has at least one item and each item has a 'cuisine_name' -->
+<!-- This will take the cuisine name of the first recipe in the array -->
+<div *ngIf="recipes.length > 0">
+  <h2 class="recipe-list-title">{{ recipes[0].cuisine_name }} Recipes</h2>
+
+  <div class="recipe-container">
+    <div *ngFor="let recipe of recipes" class="recipe-card">
+      <div class="recipe-image">
+        <img class="img-fluid rounded-start"   [src]="sharedService.getFullImageUrl(recipe.image)" alt="Recipe image">
       </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ recipe.title }}</h5>
-          <p class="card-text">{{ sharedService.truncateInstructions(recipe.instructions) }}</p>
-          <p class="card-text">Cuisine: {{ recipe.cuisine_name }}</p>
-          <a [routerLink]="['/recipes', recipe.id]" class="btn btn-outline-secondary">View Recipe</a>
-        </div>
+      <div class="recipe-details">
+        <h3 class="recipe-title">{{ recipe.title }}</h3>
+        <p class="recipe-text">{{ sharedService.truncateInstructions(recipe.instructions) }}</p>
+        <p class="recipe-cuisine">Cuisine: {{ recipe.cuisine_name }}</p>
+        <a [routerLink]="['/recipes', recipe.id]" class="recipe-btn">View Recipe</a>
       </div>
     </div>
   </div>
 </div>
+<app-footer></app-footer>
 
 <ng-template #noRecipesTemplate>
   <p>No recipes found.</p>
 </ng-template>
+
+
