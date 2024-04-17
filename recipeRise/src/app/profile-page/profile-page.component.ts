@@ -162,6 +162,7 @@ export class ProfilePageComponent implements OnInit {
     } else {
       console.error('User ID not found in local storage');
     }
+    this.activeSection = 'public-profile'
   }
   
   

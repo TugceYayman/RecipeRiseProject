@@ -32,9 +32,6 @@
                 <nav class="profile-usermenu">
                   <ul class="nav flex-column">
                     <li class="nav-item">
-                      <a class="nav-link" (click)="showSection('personal-info')">Personal Info</a>
-                    </li>
-                    <li class="nav-item">
                       <a class="nav-link" (click)="showSection('public-profile')">My Recipes</a>
                     </li>
                     <li class="nav-item">
@@ -47,32 +44,7 @@
          <!-- Profile Content -->
           <div class="col-md-8">
             <div class="profile-content" id="content-section">
-            <div *ngIf="activeSection === 'personal-info'">
-              <h2>Personal Info</h2>
-              <p>These details will be used for your profile. By filling out this information, you will receive a more personalized experience on our website.</p>
-              <form id="personal-info-form">
-                  <div class="form-group">
-                      <label for="emailAddress">Email Address*</label>
-                      <input type="email" class="form-control" id="emailAddress" placeholder="user@example.com" required>
-                  </div>
-                  <div class="form-row">
-                      <div class="form-group col-md-6">
-                          <label for="firstName">First Name</label>
-                          <input type="text" class="form-control" id="firstName" placeholder="First Name">
-                      </div>
-                      <div class="form-group col-md-6">
-                          <label for="lastName">Last Name</label>
-                          <input type="text" class="form-control" id="lastName" placeholder="Last Name">
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="birthDate">Birth Date</label>
-                      <input type="date" class="form-control" id="birthDate">
-                  </div>
-               
-                  <button type="submit" class="btn">Save Changes</button>
-              </form>
-            </div>
+            
             <div *ngIf="activeSection === 'public-profile'">
               <h2>My Recipes</h2>
               <!-- Recipes Section -->
