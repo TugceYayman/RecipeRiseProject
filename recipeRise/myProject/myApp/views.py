@@ -20,7 +20,16 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.http import JsonResponse
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
+import random
 
+
+
+def random_recipes(request):
+    recipes_count = Recipe.objects.count()
+    random_ids = random.sample(range(1, recipes_count+1), 10) # Adjust the range according to your IDs
+    random_recipes = Recipe.objects.filter(id__in=random_ids)
+    data = list(random_recipes.values()) # Or use a serializer if you're using Django Rest Framework
+    return JsonResponse(data, safe=False)
 
 
 @api_view(['POST'])

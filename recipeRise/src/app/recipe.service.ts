@@ -20,6 +20,10 @@ export class RecipeService {
       }
     };
   }
+
+  getRandomRecipes(): Observable<any> {
+    return this.http.get(`${this.apiUrl}recipes/random/`);
+  }
   
   addRecipe(recipeData: FormData): Observable<any> {
 
@@ -65,12 +69,10 @@ export class RecipeService {
   }
 
 
-
  // recipe.service.ts
   getRecipesByCuisine(cuisineId: number): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.apiUrl}recipes/cuisine/${cuisineId}/`);
   }
-
 
   saveRecipeForUser(userId: number, recipeId: number): Observable<any> {
     // Adjust the URL and endpoint as needed for your backend setup.

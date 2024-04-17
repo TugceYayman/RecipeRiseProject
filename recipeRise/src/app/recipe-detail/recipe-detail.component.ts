@@ -150,18 +150,23 @@ export class RecipeDetailComponent implements OnInit {
     // Create a new FormData object
     const formData = new FormData();
     // Append all recipe fields except the 'id' to the formData
+    // Append all recipe fields except the 'id' and 'image' to the formData
     Object.keys(this.recipe).forEach((key) => {
       const property = key as keyof Recipe;
-      const value = this.recipe[property];
-      if (property !== 'id' && value !== undefined && value !== null) {
-        formData.append(property, typeof value === 'string' ? value : String(value));
+      if (property !== 'id' && property !== 'image') {
+        const value = this.recipe[property];
+        if (value !== undefined && value !== null) {
+          formData.append(property, typeof value === 'string' ? value : String(value));
+        }
       }
     });
-    
+
     // Append the image file if a new image has been selected
     if (this.selectedFile) {
       formData.append('image', this.selectedFile, this.selectedFile.name);
     }
+
+
     
       // Log the FormData contents just before the PUT request
     for (let pair of formData.entries()) {

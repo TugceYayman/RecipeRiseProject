@@ -12,6 +12,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('recipes/', RecipeListCreateView.as_view(), name='recipe-list'),
     path('recipes/<int:pk>/', RecipeDetailView.as_view(), name='recipe-detail'),
+    path('recipes/random/', views.random_recipes, name='random_recipes'),
     path('cuisines/', CuisineList.as_view(), name='cuisine-list'),
     path('register/',api_signup , name='register'),
     path('signup/', api_signup, name='signup'),
