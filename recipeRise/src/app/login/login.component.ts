@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,9 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,
+    private dialog: MatDialog,
+  ) { }
 
   onLogin(): void {
     
@@ -38,12 +42,17 @@ export class LoginComponent {
 
         localStorage.setItem('userId', userId.toString());
         console.log('Stored userId', userId); // Debugging line
-
+        this.dialog.open(UpdateDialogComponent, {
+          data: { title: 'Success', message: 'Logged in successfully!' },
+        });
 
         this.router.navigate(['/recipe-list']); // Navigate to the desired route after login
       },
       error => {
-        console.error('Login failed', error);
+        //console.error('Login failed', error);
+        this.dialog.open(UpdateDialogComponent, {
+          data: { title: 'Fail', message: 'Login Failed!' },
+        });
         this.errorMessage = 'Invalid username or password'; // Set error message
       }
     );
