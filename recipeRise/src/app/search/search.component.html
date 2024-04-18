@@ -1,16 +1,16 @@
 <app-navbar></app-navbar>
-<div *ngIf="recipes.length > 0; else noRecipesTemplate">
-  <div *ngFor="let recipe of recipes" class="card my-3" style="background-color: #dcecec">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img [src]="sharedService.getFullImageUrl(recipe.image)" alt="Recipe image" class="img-fluid rounded-start" style="height: 250px; object-fit: cover;">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ recipe.title }}</h5>
-          <p class="card-text">{{ sharedService.truncateInstructions(recipe.instructions) }}</p>
-          <p class="card-text">Cuisine: {{ recipe.cuisine_name }}</p>
-          <a [routerLink]="['/recipes', recipe.id]" class="btn btn-outline-secondary">View Recipe</a>
+<div class="container my-4">
+  <div class="allRecipes">
+    <div *ngIf="recipes.length > 0; else noRecipesTemplate" class="row">
+      <div *ngFor="let recipe of recipes" class="col-md-6">
+        <div class="card my-3" style="background-color: #dcecec">
+          <img [src]="sharedService.getFullImageUrl(recipe.image)" alt="Recipe image" class="card-img-top img-fluid rounded-start" style="height: 250px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.title }}</h5>
+            <p class="card-text">{{ sharedService.truncateInstructions(recipe.instructions) }}</p>
+            <p class="card-text">Cuisine: {{ recipe.cuisine_name }}</p>
+            <a [routerLink]="['/recipes', recipe.id]" class="btn btn-outline-secondary">View Recipe</a>
+          </div>
         </div>
       </div>
     </div>
@@ -18,6 +18,12 @@
 </div>
 
 <ng-template #noRecipesTemplate>
-  <p>No recipes found.</p>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p>No recipes found.</p>
+      </div>
+    </div>
+  </div>
 </ng-template>
-
+<app-footer></app-footer>
