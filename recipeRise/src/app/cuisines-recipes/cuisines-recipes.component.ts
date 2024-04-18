@@ -4,10 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../models/recipe.model';
 import { SharedService } from '../shared.service';
-import { RecipeDetailComponent } from '../recipe-detail/recipe-detail.component';
 import { CuisineService } from '../cuisine.service';
 import { switchMap } from 'rxjs/operators';
-import { Params } from '@angular/router';
 
 
 interface Cuisine {

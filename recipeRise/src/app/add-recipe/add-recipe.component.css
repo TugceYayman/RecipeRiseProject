@@ -1,3 +1,21 @@
+/* Adding background image to the body */
+body {
+ 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: creates a parallax effect */
+}
+
+:host {
+  display: block;
+  min-height: 100vh; /* Use min-height instead of height */
+  background-image: url('/assets/images/bg13.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 .add-recipe-container {
     max-width: 600px;
     margin: 2rem auto;
@@ -6,6 +24,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
+
   
   .add-recipe-container h2 {
     text-align: center;
