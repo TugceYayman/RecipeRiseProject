@@ -23,6 +23,23 @@ from rest_framework.permissions import IsAuthenticated
 import random
 from django.db.models import Max
 
+def check_recipe_saved(request, user_id, recipe_id):
+    try:
+        saved_recipe = SavedRecipe.objects.get(user_id=user_id, recipe_id=recipe_id)
+        return JsonResponse({'saved': True})
+    except SavedRecipe.DoesNotExist:
+        return JsonResponse({'saved': False})
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def unsave_recipe(request, user_id, recipe_id):
+    try:
+        saved_recipe = SavedRecipe.objects.get(user=request.user, recipe_id=recipe_id)
+        saved_recipe.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except SavedRecipe.DoesNotExist:
+        return Response({'message': 'Saved recipe not found.'}, status=status.HTTP_404_NOT_FOUND)
+
 
 
 def random_recipes(request):

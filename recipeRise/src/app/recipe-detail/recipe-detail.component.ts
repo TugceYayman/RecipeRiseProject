@@ -4,6 +4,7 @@ import { RecipeService } from '../recipe.service';
 import { Recipe } from '../models/recipe.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from '../auth.service';
 
 
@@ -81,25 +82,37 @@ export class RecipeDetailComponent implements OnInit {
     this.isEditMode = state;
   }
 
-  deleteRecipe(id:number | undefined) {
-    const confirmation = confirm('Are you sure you want to delete this recipe?');
-    if (confirmation) {
-      this.isLoading = true;
-      this.recipeService.deleteRecipe(this.recipeId).subscribe(
-        () => {
-          // Deletion successful
-          this.isLoading = false;
-          this.router.navigate(['/recipes']); // Navigate to the list of recipes
-        },
-        (error) => {
-          // Handle the error
-          console.error('Error deleting recipe:', error);
-          this.isLoading = false;
-        }
-      );
-    }
+  deleteRecipe(id: number | undefined) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Confirmation',
+        message: 'Are you sure you want to delete this recipe?'
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // User confirmed deletion
+        this.isLoading = true;
+        this.recipeService.deleteRecipe(this.recipeId).subscribe(
+          () => {
+            this.dialog.open(UpdateDialogComponent, {
+              data: { title: 'Info', message: 'Recipe successfully deleted!' },
+            }).afterClosed().subscribe(() => {
+              this.isLoading = false;
+              this.router.navigate(['/profile-page']); // Navigate to the list of recipes
+            });
+          },
+          (error) => {
+            // Handle the error
+            console.error('Error deleting recipe:', error);
+            this.isLoading = false;
+          }
+        );
+      }
+    });
   }
-
+  
 
 
   getFullImageUrl(imagePath?: string): string {
@@ -207,6 +220,39 @@ export class RecipeDetailComponent implements OnInit {
   
     this.isLoading = true;
   
+    // Check if the recipe is already saved for the user
+    this.recipeService.checkIfRecipeSaved(userId, recipeId).subscribe({
+      next: (data) => {
+        if (data.saved) {
+          // Recipe is already saved, prompt to unsave
+          this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+              title: 'Confirmation',
+              message: 'Recipe is already saved. Do you want to unsave it?',
+              showYesNoButtons: true
+            },
+          }).afterClosed().subscribe(result => {
+            if (result) {
+              this.unsaveRecipe(userId, recipeId);
+            } else {
+              // User opted not to unsave, so stop loading
+              this.isLoading = false;
+            }
+          });
+        } else {
+          // Recipe is not saved, proceed to save it
+          this.saveRecipeForUser(userId, recipeId);
+        }
+      },
+      error: (error) => {
+        console.error('Error checking if recipe is saved:', error);
+        this.isLoading = false;
+      }
+    });
+    
+  }
+  
+  saveRecipeForUser(userId: number, recipeId: number): void {
     this.recipeService.saveRecipeForUser(userId, recipeId).subscribe({
       next: (data) => {
         if (data && data.message === 'Recipe was already saved.') {
@@ -224,6 +270,24 @@ export class RecipeDetailComponent implements OnInit {
         console.error('Error saving recipe:', error);
         this.dialog.open(UpdateDialogComponent, {
           data: { title: 'Error', message: 'Error saving recipe!' },
+        });
+        this.isLoading = false;
+      }
+    });
+  }
+  
+  unsaveRecipe(userId: number, recipeId: number): void {
+    this.recipeService.unsaveRecipeForUser(userId, recipeId).subscribe({
+      next: () => {
+        this.dialog.open(UpdateDialogComponent, {
+          data: { title: 'Success', message: 'Recipe unsaved successfully!' },
+        });
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error unsaving recipe:', error);
+        this.dialog.open(UpdateDialogComponent, {
+          data: { title: 'Error', message: 'Error unsaving recipe!' },
         });
         this.isLoading = false;
       }

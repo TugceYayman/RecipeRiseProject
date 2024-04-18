@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../recipe.service';
-import { Recipe } from '../models/recipe.model'; // Adjust the path as necessary
 import { Cuisine } from '../cuisine.model';
 import { Router } from '@angular/router';
+import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 declare global {
   interface FormData {
@@ -25,7 +26,9 @@ export class AddRecipeComponent implements OnInit  {
 
   cuisines: Cuisine[] = [];
 
-  constructor(private recipeService: RecipeService, private router: Router) { }
+  constructor(private recipeService: RecipeService,
+    private router: Router,
+    private dialog: MatDialog,) { }
 
   ngOnInit() {
     this.fetchCuisines();
@@ -66,9 +69,11 @@ export class AddRecipeComponent implements OnInit  {
 
     this.recipeService.addRecipe(formData).subscribe({
       next: (response) => {
-        console.log(response);
-        alert('Recipe added successfully');
-        this.router.navigate(['/profile-page']);
+        this.dialog.open(UpdateDialogComponent, {
+          data: { title: 'Info', message: 'Recipe successfully added!' },
+        }).afterClosed().subscribe(() => {
+          this.router.navigate(['/profile-page']); // Navigate to the list of recipes
+        });
         // Redirect or clear form here
       },
       error: (error) => {

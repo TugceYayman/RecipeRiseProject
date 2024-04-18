@@ -24,6 +24,7 @@ import { CuisinesRecipesComponent } from './cuisines-recipes/cuisines-recipes.co
 import { SearchComponent } from './search/search.component';
 import { RouterModule } from '@angular/router';
 import { SavedRecipesComponent } from './saved-recipes/savedrecipes.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { SavedRecipesComponent } from './saved-recipes/savedrecipes.component';
     UpdateDialogComponent,
     CuisinesRecipesComponent,
     SearchComponent,
-    SavedRecipesComponent
+    SavedRecipesComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,

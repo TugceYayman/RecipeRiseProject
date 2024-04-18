@@ -85,6 +85,17 @@ export class RecipeService {
     return this.http.get<Recipe[]>('http://localhost:8000/users/saved_recipes/');
   }
 
+
+  checkIfRecipeSaved(userId: number, recipeId: number): Observable<{ saved: boolean }> {
+    return this.http.get<{ saved: boolean }>(`http://localhost:8000/users/${userId}/check_recipe_saved/${recipeId}/`);
+  }
+  
+  unsaveRecipeForUser(userId: number, recipeId: number): Observable<any> {
+    const url = `http://localhost:8000/users/${userId}/unsave_recipe/${recipeId}/`;
+    return this.http.delete(url);
+  }
+  
+
   
 
   
