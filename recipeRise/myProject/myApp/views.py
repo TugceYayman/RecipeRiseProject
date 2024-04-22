@@ -22,6 +22,29 @@ from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 import random
 from django.db.models import Max
+from django.shortcuts import get_object_or_404
+
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_profile_picture(request, user_id):
+    user = get_object_or_404(CustomUser, pk=user_id)
+    # Update the profile picture here
+    # ...
+    return Response({ 'message': 'Profile picture updated successfully.' })
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_user(request, user_id):
+    # Only allow users to delete their own account for security
+    if request.user.id == user_id:
+        user = get_object_or_404(CustomUser, pk=user_id)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 def check_recipe_saved(request, user_id, recipe_id):
     try:

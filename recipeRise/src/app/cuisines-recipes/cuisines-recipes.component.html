@@ -1,8 +1,5 @@
 <app-navbar></app-navbar>
 
-<!-- Dynamic title for the recipe list -->
-<!-- Assuming 'recipes' array has at least one item and each item has a 'cuisine_name' -->
-<!-- This will take the cuisine name of the first recipe in the array -->
 <div *ngIf="recipes.length > 0">
   <h2 class="recipe-list-title">{{ recipes[0].cuisine_name }} Recipes</h2>
 

@@ -7,12 +7,12 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CuisineService {
-  private apiUrl = 'http://localhost:8000'; // Adjust with your API endpoint
-  private cuisines!: any[]; // Ideally, use a Cuisine model instead of any
+  private apiUrl = 'http://localhost:8000'; 
+  private cuisines!: any[]; 
 
   constructor(private http: HttpClient) { }
 
-  loadCuisines(): Observable<any[]> { // Replace 'any' with your Cuisine model
+  loadCuisines(): Observable<any[]> { 
     return this.http.get<any[]>(`${this.apiUrl}/cuisines/`).pipe(
       tap(cuisines => this.cuisines = cuisines)
     );
@@ -20,7 +20,6 @@ export class CuisineService {
 
   getCuisineIdByName(cuisineName: string): number | null {
     if (!this.cuisines) {
-      // Handle the case where cuisines aren't loaded yet, e.g., return null or throw an error
       return null;
     }
     const cuisine = this.cuisines.find(c => c.name.toLowerCase() === cuisineName.toLowerCase());

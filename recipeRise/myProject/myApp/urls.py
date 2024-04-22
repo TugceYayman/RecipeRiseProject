@@ -3,15 +3,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
 from . import views
-from .views import api_signup, api_login, logout_view, RecipeListCreateView, RecipeDetailView,CuisineList, UserRecipeList, recipes_by_cuisine, save_recipe, list_saved_recipes
+from .views import api_signup, api_login, logout_view, RecipeListCreateView, RecipeDetailView,CuisineList, UserRecipeList, recipes_by_cuisine, save_recipe, list_saved_recipes, delete_user
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
+    path('users/update_profile_pic/<int:user_id>/', views.update_profile_picture, name='update_profile_pic'),
+    path('users/update_profile_pic/<int:user_id>/', views.update_profile_picture, name='update_profile_pic'),
     path('recipes/', RecipeListCreateView.as_view(), name='recipe-list'),
     path('recipes/<int:pk>/', RecipeDetailView.as_view(), name='recipe-detail'),
+    path('api/users/delete/<int:user_id>/', views.delete_user, name='delete_user'),
     path('users/<int:user_id>/unsave_recipe/<int:recipe_id>/', views.unsave_recipe, name='unsave_recipe'),
     path('users/<int:user_id>/check_recipe_saved/<int:recipe_id>/', views.check_recipe_saved, name='check_recipe_saved'),
     path('recipes/random/', views.random_recipes, name='random_recipes'),

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../recipe.service'; // Import your RecipeService
 import { Recipe } from '../models/recipe.model'; // Import your Recipe model
 import { AuthService } from '../auth.service'; 
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
 import { UserService } from '../user.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-profilePage',
@@ -22,7 +24,9 @@ export class ProfilePageComponent implements OnInit {
   profilePicturePath: any;
 
   // Inject the RecipeService in the constructor
-  constructor(private userService: UserService, private recipeService: RecipeService, private authService: AuthService, public dialog: MatDialog) { }
+  constructor(private userService: UserService, private recipeService: RecipeService, private authService: AuthService, public dialog: MatDialog,
+  private router: Router
+  ) { }
   
 
   openFileSelector(): void {
@@ -50,6 +54,7 @@ export class ProfilePageComponent implements OnInit {
         
         // Keep the file for saving
         this.selectedProfilePic = file;
+        this.saveProfilePicture();
       } else {
         console.error('User ID not found in local storage');
       }
@@ -57,19 +62,20 @@ export class ProfilePageComponent implements OnInit {
   }
   
   
-  
-  
   saveProfilePicture(): void {
     const loggedInUserId = this.authService.getLoggedInUserId();
     if (this.selectedProfilePic && loggedInUserId) {
       this.userService.updateProfilePicture(loggedInUserId, this.selectedProfilePic)
-        .subscribe({
-          next: (response) => {
-            console.log('Profile picture updated successfully');
-            // Handle successful update, like updating the image path in the component
-          },
-          error: (error) => console.error('Error updating profile picture', error)
-        });
+      .subscribe({
+        next: (response) => {
+          console.log('Update successful:', response);
+          this.openUpdateDialog(true, "Profile picture updated successfully.");
+        },
+        error: (error) => {
+          console.error('Update failed:', error);
+          this.openUpdateDialog(false, "Error updating profile picture.");
+        }
+      });
     }
   }
   
@@ -125,6 +131,42 @@ export class ProfilePageComponent implements OnInit {
     this.newPassword = '';
     this.confirmPassword = '';
   }
+
+
+  confirmAccountDeletion(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+        title: 'Confirm Deletion',
+        message: 'Are you sure you want to delete this account?'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+            this.deleteAccount();
+        }
+    });
+}
+
+deleteAccount(): void {
+    const userId = this.authService.getLoggedInUserId(); // Assuming this method exists and works
+    if (userId) {
+        this.userService.deleteUser(userId).subscribe({
+            next: (resp) => {
+                this.openUpdateDialog(true, "Account deleted successfully.");
+                localStorage.removeItem('token');  // Clear the token from local storage
+                localStorage.removeItem('userId'); // Clear the user ID from local storage
+                this.router.navigate(['/login']); // Redirect to login
+            },
+            error: (error) => {
+                console.error('Failed to delete account', error);
+            }
+        });
+    }
+}
   
   ngOnInit() {
     // Retrieve username and user ID from local storage

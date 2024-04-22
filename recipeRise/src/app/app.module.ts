@@ -9,7 +9,7 @@ import { MainContainerComponent } from './main-container/main-container.componen
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { FormsModule } from '@angular/forms'; 
 import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { AddRecipeComponent } from './add-recipe/add-recipe.component';
@@ -17,7 +17,7 @@ import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Adjust the path based on your project structure
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
 import { CuisinesRecipesComponent } from './cuisines-recipes/cuisines-recipes.component';
@@ -51,7 +51,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     HttpClientModule, 
     AppRoutingModule,
     FormsModule,
-    BrowserAnimationsModule, // Add FormsModule to the imports array
+    BrowserAnimationsModule, 
     RouterModule,
     MatDialogModule,
   ],
