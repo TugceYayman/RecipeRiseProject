@@ -1,6 +1,6 @@
-/* Base layout */
+
 .recipe-view {
-  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white for readability */
+  background-color: rgba(255, 255, 255, 0.9); 
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 2rem;
@@ -11,18 +11,17 @@
   text-align: center;
 }
 
-/* Adding background image to the body */
 body {
  
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* Optional: creates a parallax effect */
+  background-attachment: fixed; 
 }
 
 :host {
   display: block;
-  min-height: 100vh; /* Use min-height instead of height */
+  min-height: 100vh; 
   background-image: url('/assets/images/bg13.png');
   background-size: cover;
   background-position: center;
@@ -30,15 +29,15 @@ body {
   background-attachment: fixed;
 }
 
-/* Title */
+
 h1 {
-  color: #333; /* This will be your main title color */
+  color: #333; 
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Image */
+
 .current-recipe-image {
   max-width: 100%;
   max-height: 300px;
@@ -47,14 +46,14 @@ h1 {
   margin: 0 auto 1rem;
 }
 
-/* Details */
+
 .details {
   color: #666;
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
-/* Buttons */
+
 .btn {
   padding: 10px 20px;
   border-radius: 20px;
@@ -63,9 +62,9 @@ h1 {
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 0.5rem;
-  background-color: #a8a8a8; /* Soft background color for buttons */
-  color: #ff6b81; /* Color for text inside the button */
-  border: 2px solid #ff6b81; /* Soft border color */
+  background-color: #a8a8a8; 
+  color: #ff6b81; 
+  border: 2px solid #ff6b81; 
 }
 
 .btn-primary{
@@ -74,13 +73,13 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   color: #fff;
 }
-/* Primary Button Style */
+
 .btn-primary:hover {
   background-color: #ff6b81;
   transform: translateY(-2px);
 }
 
-/* Danger Button Style */
+
 .btn-danger {
   background-color: #ff6b81;
   border: none;
@@ -103,14 +102,13 @@ h1 {
   text-align: left;
 }
 
-/* Form Title Styling */
+
 .recipe-details h1 {
   color: #333;
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-/* Form Group Styling */
 .form-group {
   margin-bottom: 20px;
 }
@@ -127,13 +125,12 @@ h1 {
 .form-group textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #DADADA; /* Soft border color */
+  border: 1px solid #DADADA; 
   border-radius: 8px;
   font-size: 14px;
-  background-color: #FAFAFA; /* Very light background for inputs */
+  background-color: #FAFAFA; 
 }
 
-/* Image Upload Styling */
 .image-upload-container {
   display: flex;
   align-items: center;
@@ -144,7 +141,6 @@ h1 {
   flex-grow: 1;
 }
 
-/* Image Preview Styling */
 .image-preview {
   width: 100px;
   height: 100px;
@@ -154,7 +150,7 @@ h1 {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: #FAFAFA; /* Soft background inside the preview */
+  background-color: #FAFAFA; 
 }
 
 .img-preview {
@@ -163,7 +159,6 @@ h1 {
   object-fit: cover;
 }
 
-/* Buttons Styling */
 button {
   padding: 10px 20px;
   border-radius: 20px;
@@ -197,24 +192,24 @@ button {
 }
 
 .save-recipe-btn {
-  background-color: #d9f0f0; /* Light blue background color */
-  color: #333; /* Dark text color */
-  border: none; /* No border */
-  padding: 10px 20px; /* Padding */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Cursor style */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and scaling */
-  display: flex; /* Display as flex */
-  align-items: center; /* Center items vertically */
+  background-color: #d9f0f0; 
+  color: #333;
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, transform 0.3s; 
+  display: flex; 
+  align-items: center; 
 }
 
 .save-recipe-btn svg {
-  margin-right: 5px; /* Margin between icon and text */
+  margin-right: 5px; 
 }
 
 .save-recipe-btn:hover {
-  background-color: #b8d8d8; /* Darker shade of light blue on hover */
-  transform: scale(1.05); /* Scale up the button on hover */
+  background-color: #b8d8d8; 
+  transform: scale(1.05); 
 }
 
 
@@ -234,12 +229,12 @@ button {
   }
 
   .image-upload-container input[type="file"] {
-    order: 2; /* Move the input below the image on smaller screens */
+    order: 2; 
     margin-top: 10px;
   }
 
   .image-preview {
-    order: 1; /* Move the image above the input on smaller screens */
+    order: 1; 
   }
 }
 

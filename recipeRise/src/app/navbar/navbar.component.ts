@@ -15,14 +15,11 @@ export class NavbarComponent {
 
   logout() {
     this.authService.logout();
-    // Since the authService.logout() doesn't handle  navigation, do it here
-    this.router.navigate(['/login']); // Adjust the route as needed
+    this.router.navigate(['/login']); 
   }
   
   onSearch(): void {
-    if (!this.searchQuery.trim()) return; // If empty query, do nothing
-
-    // Navigate to the search results route with the query as a parameter
+    if (!this.searchQuery.trim()) return; 
     this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
   }
 

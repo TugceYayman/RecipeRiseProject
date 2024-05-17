@@ -1,7 +1,7 @@
 .profile-userpic img {
     width: 170px;
     height: 170px;
-    object-fit: cover; /* This ensures the image covers the area without being stretched */
+    object-fit: cover; 
 }
 
 .changeButton {
@@ -14,8 +14,8 @@
     width: fit-content;
     height: fit-content;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin: 20px 0; /* Add more vertical margin for separation */
-    display: block; /* Ensure it's a block element to fill width */
+    margin: 20px 0; 
+    display: block; 
     padding: 0.5rem 1rem;
  
 }
@@ -26,33 +26,32 @@
 }
 
 .changeButton:hover {
-    transform: scale(1.05); /* Scales up the button to 105% of its original size */
+    transform: scale(1.05);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-    opacity: 1; /* Increase the opacity on hover for better visual feedback */
+    opacity: 1; 
 }
 
 
 .profile-usermenu .nav-item {
-    border-bottom: 1px solid #cccccc; /* Add a bottom border to each list item */
+    border-bottom: 1px solid #cccccc; 
     margin: 15px 0 15px 0;
 }
 
 .profile-usermenu .nav-link {
-    display: block; /* Stretch the link to fill the list item */
-    padding: 0.5rem 1rem; /* Add some padding to the link for spacing */
-    color: black; /* Set the text color for the link */
-    background-color: white; /* Set the background color for the link */
+    display: block; 
+    padding: 0.5rem 1rem; 
+    color: black; 
+    background-color: white; 
 }
 
 .profile-usermenu .nav-link:hover {
-    background-color: #f8f9fa; /* Change the background on hover */
+    background-color: #f8f9fa; 
 }
 
-/* If using Bootstrap 5, you may need to override the default Bootstrap styles */
 .profile-usermenu .nav-link.active {
-    background-color: #e9ecef; /* Active item background */
-    color: black; /* Set the text color for the active link */
-    border-radius: 0; /* Remove border radius if any */
+    background-color: #e9ecef;
+    color: black; 
+    border-radius: 0; 
 }
 
 .content-block {
@@ -71,43 +70,42 @@
     margin: 40px 0 40px 0;
 }
 
-/* Align the cards in a flex container */
 .allRecipes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* This will space out the cards evenly */
-    gap: 20px; /* This replaces 'column-gap' and also provides a gap in rows */
+    justify-content: space-between; 
+    gap: 20px; 
 }
 
-/* Style the cards with a nice border-radius and a hover effect */
+
 .card {
     background-color: #dcecec;
     border-radius: 1.6em;
-    overflow: hidden; /* This makes sure that children (like images) do not overflow the rounded corners */
-    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions for hover effects */
+    overflow: hidden; 
+    transition: box-shadow 0.3s ease, transform 0.3s ease; 
 }
 
-/* Add the hover effect for the card */
+
 .card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly larger shadow to lift the card */
-    transform: scale(1.02); /* Slightly scale up the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: scale(1.02); 
 }
 
-/* Additional styles for content inside the card */
+
 .card-body {
-    padding: 16px; /* Adjust padding as needed */
+    padding: 16px; 
 }
 
 .card-title {
-    margin-bottom: 0.5rem; /* Space between the title and the content */
+    margin-bottom: 0.5rem; 
 }
 
 .card-text {
-    color: #333; /* Darker text color for better readability */
-    margin-bottom: 1rem; /* Space between the text and the bottom of the card */
+    color: #333; 
+    margin-bottom: 1rem; 
 }
 
-/* Style the view recipe button */
+
 .btn-outline-secondary {
     border-color: #a8d1d1;
     color: #a8d1d1;
@@ -115,27 +113,26 @@
 
 .btn-outline-secondary:hover {
     border-color: #8fb0b2;
-    color: #8fb0b2; /* Darker shade on hover */
-    text-decoration: none; /* Remove underline from links on hover */
+    color: #8fb0b2; 
+    text-decoration: none; 
 }
 
 
 .profile-picture-frame {
-    width: 170px; /* Same width as the image */
-    height: 170px; /* Same height as the image */
-    background-color: #e0e0e0; /* Neutral background color */
-    border-radius: 50%; /* Rounded border */
+    width: 170px; 
+    height: 170px; 
+    background-color: #e0e0e0; 
+    border-radius: 50%; 
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Ensure the content doesn't overflow */
+    overflow: hidden; 
 }
 
 .profile-picture-frame img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the image fills the frame */
+    object-fit: cover; 
 }
 
 
-/* Since you don't want a media query, I'm leaving that out */

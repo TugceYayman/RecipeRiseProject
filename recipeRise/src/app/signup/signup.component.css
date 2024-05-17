@@ -36,7 +36,7 @@ button{
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    transition: background-color 0.3s ease; 
 }
 
 button[disabled]{
@@ -45,22 +45,22 @@ button[disabled]{
 
 .signup-container p {
     text-align: center;
-    color: #666; /* Soften the text color */
+    color: #666; 
 }
 
 .signup-container a {
-    color: #ff6b81; /* Matching the button color for consistency */
-    text-decoration: none; /* Remove underlines from links */
+    color: #ff6b81; 
+    text-decoration: none; 
 }
 .signup-container a:hover {
-    text-decoration: underline; /* Add underline on hover for better interaction */
+    text-decoration: underline; 
 }
 
 button:hover, button:focus {
     background-color: #a8d1d1; 
     outline: none; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    transform: translateY(-2px); /* Optional: slight lift effect */
+    transform: translateY(-2px);
 }
 body, html {
     height: 100%; 
@@ -71,20 +71,18 @@ body, html {
 
   
   body {
-    /* The image used */
     background: url('/assets/images/bg13.png') ;
    background-attachment: fixed;
-    /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover; 
   }
 
 .container{
-    min-height: 100vh; /* 100% of the viewport height */
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
+    justify-content: center; 
+    align-items: center;
 }
 

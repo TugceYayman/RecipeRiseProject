@@ -6,17 +6,13 @@
       <div class="card my-3" style="width: 460px; background-color: #dcecec">
         <div class="row g-0">
           <div class="col-md-4 card-img-container">
-            <!-- Use sharedService.getFullImageUrl to get the full path of the image -->
             <img [src]="getFullImageUrl(recipe.image)" alt="Recipe image" class="card-img img-fluid rounded-start img-responsive" style="height: 250px; object-fit: cover;">
           </div>
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">{{ recipe.title }}</h5>
-              <!-- Use sharedService.truncateInstructions to truncate the description if needed -->
-              <p class="card-text"><small class="text-muted">{{ sharedService.truncateInstructions(recipe.instructions) }}</small></p>
-              <!-- Here I am assuming you have a method to get cuisine type name from ID, if not this needs to be fetched or processed in your component.ts -->
+              <p class="card-text"><small class="text-muted">{{ sharedService.truncateInstructions(recipe.instructions) }}</small></p>      
               <p class="card-text">Cuisine: {{ getCuisineNameById(recipe.cuisine_id) }}</p>
-              <!-- Use routerLink to link to the detailed view of the recipe -->
               <a [routerLink]="['/recipes', recipe.id]" class="btn btn-large btn-outline-secondary" style="border-color: #a8d1d1;">View Recipe</a>
             </div>
           </div>

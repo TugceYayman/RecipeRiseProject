@@ -26,34 +26,26 @@ export class LoginComponent {
         console.log('Login success', data);
         
       
-         const userIdKey = 'userID'; // Change this to match the key in the response
+         const userIdKey = 'userID'; 
         const userId = Number(data[userIdKey]);
          
-        
-        // // Check if the parsed ID is a number
-        // if (Number.isNaN(userId)) {
-        //   console.error(`User ID is not a number: ${data[userIdKey]}`);
-        //   this.errorMessage = 'An error occurred during login. Please try again.';
-        //   return;
-        // }
 
-        localStorage.setItem('token', data.token); // Store the token in local storage
+        localStorage.setItem('token', data.token); 
         localStorage.setItem('username', this.usernameOrEmail);
 
         localStorage.setItem('userId', userId.toString());
-        console.log('Stored userId', userId); // Debugging line
+        console.log('Stored userId', userId); 
         this.dialog.open(UpdateDialogComponent, {
           data: { title: 'Success', message: 'Logged in successfully!' },
         });
 
-        this.router.navigate(['/recipe-list']); // Navigate to the desired route after login
+        this.router.navigate(['/recipe-list']); 
       },
       error => {
-        //console.error('Login failed', error);
         this.dialog.open(UpdateDialogComponent, {
           data: { title: 'Fail', message: 'Login Failed!' },
         });
-        this.errorMessage = 'Invalid username or password'; // Set error message
+        this.errorMessage = 'Invalid username or password'; 
       }
     );
   }

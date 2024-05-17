@@ -9,23 +9,18 @@
       <label for="recipeTitle">Recipe Title</label>
       <input type="text" id="recipeTitle" name="recipeTitle" [(ngModel)]="recipeTitle" required>
     </div>
-
     <div class="form-group">
       <label for="recipeImage">Recipe Image</label>
       <input type="file" id="recipeImage" (change)="onFileSelected($event)" />
     </div>
-    
     <div class="form-group">
       <label for="ingredients">Ingredients</label>
       <textarea id="ingredients" name="ingredients" [(ngModel)]="ingredients" rows="4" required></textarea>
     </div>
-
     <div class="form-group">
       <label for="instructions">Instructions</label>
       <textarea id="instructions" name="instructions" [(ngModel)]="instructions" rows="6" required></textarea>
     </div>
-
-    <!-- Cuisine selection -->
     <div class="form-group">
       <label for="cuisine">Cuisine</label>
       <select id="cuisine" name="cuisine" [(ngModel)]="selectedCuisine" required>

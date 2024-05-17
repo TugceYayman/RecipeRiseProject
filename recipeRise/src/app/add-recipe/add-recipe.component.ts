@@ -46,10 +46,9 @@ export class AddRecipeComponent implements OnInit  {
   }
 
   submitRecipe() {
-
-    console.log('Title:', this.recipeTitle); // Log the title
-    console.log('Ingredients:', this.ingredients); // Log the ingredients
-    console.log('Instructions:', this.instructions); // Log the instructions
+    console.log('Title:', this.recipeTitle); 
+    console.log('Ingredients:', this.ingredients); 
+    console.log('Instructions:', this.instructions); 
 
     const formData = new FormData();
     formData.append('title', this.recipeTitle);
@@ -61,20 +60,17 @@ export class AddRecipeComponent implements OnInit  {
       formData.append('image', this.selectedFile, this.selectedFile.name);
     }
 
-     // Log FormData content before sending
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-      // Log the form data for debugging purposes
 
     this.recipeService.addRecipe(formData).subscribe({
       next: (response) => {
         this.dialog.open(UpdateDialogComponent, {
           data: { title: 'Info', message: 'Recipe successfully added!' },
         }).afterClosed().subscribe(() => {
-          this.router.navigate(['/profile-page']); // Navigate to the list of recipes
+          this.router.navigate(['/profile-page']); 
         });
-        // Redirect or clear form here
       },
       error: (error) => {
         console.error('There was an error!', error);

@@ -52,7 +52,6 @@ export class RecipeService {
     return this.http.get<Recipe[]>(`${this.apiUrl}users/${userId}/recipes/`, httpOptions);
   }
 
-  //For recipe-detail 
   getRecipeById(id: number): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.apiUrl}recipes/${id}/`);
   }

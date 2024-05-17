@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RecipeService } from '../recipe.service'; // Import your RecipeService
-import { Recipe } from '../models/recipe.model'; // Import your Recipe model
+import { RecipeService } from '../recipe.service'; 
+import { Recipe } from '../models/recipe.model'; 
 import { AuthService } from '../auth.service'; 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
@@ -16,19 +16,17 @@ import { Router } from '@angular/router';
 export class ProfilePageComponent implements OnInit {
   activeSection = 'personal-info';
   username: string = "";
-  recipes: Recipe[] = []; // Add this to store the recipes
+  recipes: Recipe[] = []; 
   currentPassword!: string;
   newPassword!: string;
   confirmPassword!: string;
   selectedProfilePic!: File;
   profilePicturePath: any;
 
-  // Inject the RecipeService in the constructor
   constructor(private userService: UserService, private recipeService: RecipeService, private authService: AuthService, public dialog: MatDialog,
   private router: Router
   ) { }
   
-
   openFileSelector(): void {
     document.getElementById('profilePictureInput')?.click();
   }
@@ -37,22 +35,16 @@ export class ProfilePageComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (file) {
-      // Assuming you have the user ID available
-      const userId = localStorage.getItem('userId'); // Retrieve the user ID from local storage
-  
+      const userId = localStorage.getItem('userId'); 
       if (userId) {
         const key = `profilePicture_${userId}`;
         const reader = new FileReader();
         reader.onload = (e: any) => {
           const image = document.getElementById('selectedProfilePic') as HTMLImageElement;
-          image.src = e.target.result;
-          
-          // Save the image to local storage with a key specific to the user
+          image.src = e.target.result;  
           localStorage.setItem(key, e.target.result);
         };
-        reader.readAsDataURL(file);
-        
-        // Keep the file for saving
+        reader.readAsDataURL(file);   
         this.selectedProfilePic = file;
         this.saveProfilePicture();
       } else {
@@ -60,8 +52,7 @@ export class ProfilePageComponent implements OnInit {
       }
     }
   }
-  
-  
+    
   saveProfilePicture(): void {
     const loggedInUserId = this.authService.getLoggedInUserId();
     if (this.selectedProfilePic && loggedInUserId) {
@@ -83,12 +74,9 @@ export class ProfilePageComponent implements OnInit {
   selectProfilePicture(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
-      // Assuming you want to immediately display the selected image
       const reader = new FileReader();
       reader.onload = (e: any) => this.profilePicturePath = e.target.result;
       reader.readAsDataURL(file);
-      
-      // Keep the file for the save function
       this.selectedProfilePic = file;
     }
   }
@@ -108,23 +96,18 @@ export class ProfilePageComponent implements OnInit {
   changePassword(currentPassword: string, newPassword: string, confirmPassword: string): void {
     if (newPassword === confirmPassword) {
       if (currentPassword === newPassword) {
-        // If the current password and new password are the same
         this.openUpdateDialog(false, "New password cannot be the same as your current password.");
       } else {
-        // Proceed to call the service to change the password
         this.authService.changePassword(currentPassword, newPassword).subscribe({
           next: (response) => {
-            // Handle the successful response here
             this.openUpdateDialog(true, "Password changed successfully.");
           },
           error: (error) => {
-            // Handle the error here
             this.openUpdateDialog(false, error.error.detail || "Error changing password.");
           }
         });
       }
     } else {
-      // If new password and confirm password don't match
       this.openUpdateDialog(false, "The new passwords do not match.");
     }
     this.currentPassword = '';
@@ -141,9 +124,7 @@ export class ProfilePageComponent implements OnInit {
         title: 'Confirm Deletion',
         message: 'Are you sure you want to delete this account?'
     };
-
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
             this.deleteAccount();
@@ -152,37 +133,33 @@ export class ProfilePageComponent implements OnInit {
 }
 
 deleteAccount(): void {
-    const userId = this.authService.getLoggedInUserId(); // Assuming this method exists and works
+    const userId = this.authService.getLoggedInUserId(); 
     if (userId) {
         this.userService.deleteUser(userId).subscribe({
             next: (resp) => {
                 this.openUpdateDialog(true, "Account deleted successfully.");
-                localStorage.removeItem('token');  // Clear the token from local storage
-                localStorage.removeItem('userId'); // Clear the user ID from local storage
-                this.router.navigate(['/login']); // Redirect to login
+                localStorage.removeItem('token');  
+                localStorage.removeItem('userId'); 
+                this.router.navigate(['/login']); 
             },
             error: (error) => {
-                console.error('Failed to delete account', error);
-            }
+                console.error('Failed to delete account', error); }
         });
-    }
-}
+    }}
   
   ngOnInit() {
-    // Retrieve username and user ID from local storage
-    this.username = localStorage.getItem('username') || 'User'; // Default to 'User' if not found
-    const userId = localStorage.getItem('userId'); // Replace 'userId' with your actual key
+
+    this.username = localStorage.getItem('username') || 'User'; 
+    const userId = localStorage.getItem('userId'); 
     console.log('Local Storage User ID:', userId);
-    // Ensure that the userId is not null
     if (userId) {
       const numericUserId = Number(userId);
-      console.log('Numeric User ID:', numericUserId); // Debugging line
+      console.log('Numeric User ID:', numericUserId); 
   
       if (!isNaN(numericUserId)) {
-        // Retrieve recipes by user ID
         this.recipeService.getRecipesByUser(numericUserId).subscribe(
           (data: Recipe[]) => {
-            console.log('Fetched recipes:', data); // Debugging line
+            console.log('Fetched recipes:', data); 
             this.recipes = data;
           },
           (error) => {
@@ -190,11 +167,9 @@ deleteAccount(): void {
           }
         );
   
-        // Retrieve the saved profile picture for the user from local storage
         const key = `profilePicture_${userId}`;
         const savedProfilePicture = localStorage.getItem(key);
         if (savedProfilePicture) {
-          // Set the profile picture source
           const image = document.getElementById('selectedProfilePic') as HTMLImageElement;
           image.src = savedProfilePicture;
         }
@@ -209,18 +184,16 @@ deleteAccount(): void {
   
   
   truncateInstructions(instructions: string): string {
-    const words = instructions.split(' ', 41); // Split into words
+    const words = instructions.split(' ', 41); 
     if (words.length > 40) {
-      return words.slice(0, 40).join(' ') + '...'; // Join first 20 words and add ellipsis
+      return words.slice(0, 40).join(' ') + '...'; 
     }
-    return instructions; // Return the full instructions if less than 20 words
+    return instructions; 
   }
 
 
   getFullImageUrl(imagePath?: string): string {
     if (!imagePath) {
-      // Handle the case where imagePath is undefined,
-      // e.g., return a default image path or handle it however you prefer
       return 'path_to_default_image.png'; 
     }
     if (imagePath.startsWith('http')) {

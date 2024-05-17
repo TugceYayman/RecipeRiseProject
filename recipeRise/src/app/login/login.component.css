@@ -5,7 +5,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: #a8d1d1; /* Light background for the form */
+    background: #a8d1d1; 
     -webkit-box-shadow: 5px 5px 20px #757878 ;
     box-shadow: 5px 5px 20px #757878 ;
 
@@ -36,29 +36,29 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    transition: background-color 0.3s ease; 
 }
 
 .login-btn:hover, .login-btn:focus {
-    background-color: #a8d1d1; /* Slightly darker pink on hover/focus */
-    outline: none; /* Remove outline on focus */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    transform: translateY(-2px); /* Optional: slight lift effect */
+    background-color: #a8d1d1; 
+    outline: none; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-2px); 
 }
 
 
 .login-container p {
     text-align: center;
-    color: #666; /* Soften the text color */
+    color: #666; 
 }
 
 .login-container a {
-    color: #ff6b81; /* Matching the button color for consistency */
-    text-decoration: none; /* Remove underlines from links */
+    color: #ff6b81; 
+    text-decoration: none; 
 }
 
 .login-container a:hover {
-    text-decoration: underline; /* Add underline on hover for better interaction */
+    text-decoration: underline; 
 }
 
 
@@ -71,19 +71,17 @@
   }
 
   body {
-    /* The image used */
     background: url('/assets/images/bg13.png') ;
    background-attachment: fixed;
-    /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover; 
   }
 
 .container{
-    min-height: 100vh; /* 100% of the viewport height */
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
+    justify-content: center; 
+    align-items: center; 
 }

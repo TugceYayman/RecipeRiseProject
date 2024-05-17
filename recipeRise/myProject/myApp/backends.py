@@ -10,7 +10,6 @@ class CustomUserBackend(ModelBackend):
                 Q(username__iexact=username) | Q(email__iexact=username)
             )
         except UserModel.DoesNotExist:
-            # Create a new user if we have none with this username or email
             UserModel().set_password(password)
         else:
             if user.check_password(password) and self.user_can_authenticate(user):

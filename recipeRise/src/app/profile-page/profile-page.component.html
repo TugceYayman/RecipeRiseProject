@@ -12,7 +12,6 @@
         <!-- Profile Sidebar -->
         <div class="col-md-4">
             <div class="profile-sidebar">
-                <!-- User Image and Title -->
                 <div class="d-flex align-items-center">
                     <div class="profile-userpic my-3">
                         <img width="170px" height="170px" src="/assets/images/ProfilePicture.png" class="img-fluid rounded-circle" alt="User Image" id="selectedProfilePic">
@@ -23,8 +22,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Button to trigger modal -->
-                <!-- Button to trigger file selector -->
                 <input type="file" accept="image/*" id="profilePictureInput" style="display: none;" (change)="onFileSelect($event)">
                 <button type="button" class="changeButton" (click)="openFileSelector()">
                     Change Profile Picture
@@ -50,24 +47,18 @@
             
             <div *ngIf="activeSection === 'public-profile'">
               <h2>My Recipes</h2>
-              <!-- Recipes Section -->
               <div *ngIf="recipes.length > 0; else noRecipesTemplate">
                 
-              <!-- Within your component's template, e.g., profile-page.component.html -->
               <div *ngFor="let recipe of recipes" class="card my-3" style="background-color: #dcecec">
                 <div class="row g-0">
                   <div class="col-md-4">
-                    <!-- Bind the src attribute to your image path, which might need to be adjusted based on your backend configuration -->
                     <img [src]="getFullImageUrl(recipe.image)" alt="Recipe image" class="img-fluid rounded-start" style="height: 250px; object-fit: cover;">
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
                       <h5 class="card-title">{{ recipe.title }}</h5>
-                      <!-- Use the truncateInstructions method to limit the instructions' length -->
                       <p class="card-text">{{ truncateInstructions(recipe.instructions) }}</p>
-                      <!-- Display the cuisine_id until you have a way to get the cuisine name -->
                       <p class="card-text">Cuisine: {{ recipe.cuisine_name }}</p>
-                      <!-- Link to view the recipe details -->
                       <a [routerLink]="['/recipes', recipe.id]" class="btn btn-outline-secondary">
                         View Recipe
                       </a>                      

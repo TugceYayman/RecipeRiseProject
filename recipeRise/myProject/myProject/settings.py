@@ -13,20 +13,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-0%riwal*zo-^7q=_83m2b7k)2y)wrtk37$$+8uw5$^yxxpa1(&"
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# # Add CORS_ORIGIN_WHITELIST
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:4200',  # Example: Your Angular frontend URL
-# ]
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:4200']
 
@@ -37,9 +31,7 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-# Update CORS_MIDDLEWARE_ALLOW_ALL to False if you want to use CORS_ORIGIN_WHITELIST
-CORS_ALLOW_ALL_ORIGINS = True  # This line should be removed or set to False
-
+CORS_ALLOW_ALL_ORIGINS = True  
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -97,23 +89,18 @@ TEMPLATES = [
 WSGI_APPLICATION = "myProject.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'recipe_app_database',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'localhost',   # Assuming your MySQL server is running locally
-        'PORT': '3306',        # MySQL default port
+        'HOST': 'localhost',  
+        'PORT': '3306',        
     }
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -130,8 +117,6 @@ AUTH_USER_MODEL = 'myApp.CustomUser'
 # Define the custom authentication backend
 AUTHENTICATION_BACKENDS = ['myApp.backends.CustomUserBackend']
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
 
@@ -142,13 +127,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

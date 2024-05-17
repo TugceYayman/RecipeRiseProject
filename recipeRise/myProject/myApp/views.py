@@ -30,15 +30,12 @@ from django.shortcuts import get_object_or_404
 @permission_classes([IsAuthenticated])
 def update_profile_picture(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
-    # Update the profile picture here
-    # ...
     return Response({ 'message': 'Profile picture updated successfully.' })
 
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_user(request, user_id):
-    # Only allow users to delete their own account for security
     if request.user.id == user_id:
         user = get_object_or_404(CustomUser, pk=user_id)
         user.delete()
@@ -66,7 +63,6 @@ def unsave_recipe(request, user_id, recipe_id):
 
 
 def random_recipes(request):
-    # Ensure the 'Max' function is imported from 'django.db.models'
     max_id = Recipe.objects.aggregate(max_id=Max("id"))['max_id']
     random_ids = set()
     
@@ -91,17 +87,14 @@ def api_signup(request):
         user = CustomUser(username=username, email=email)
         user.password = hashed_password
 
-        # Create a serializer instance with the user instance
         serializer = CustomUserSerializer(data=request.data)
 
-        # Check if the serializer is valid
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'User Account successfully created', 'user': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except IntegrityError as e:
-        # Here check the error message or code to tailor the response
         if 'UNIQUE constraint' in str(e):
             return Response({'error': 'A user with that username or email already exists.'}, status=status.HTTP_409_CONFLICT)
         else:
@@ -114,29 +107,20 @@ def api_signup(request):
         print(e)
         return Response({'error': 'An internal error occurred.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+        
 @csrf_exempt
 @api_view(['POST', 'GET'])
 def api_login(request):
     if request.method == 'GET':
-        # Handle GET request, maybe render a login form
         return Response({'message': 'This endpoint requires a POST request for login.'}, status=405)
 
     elif request.method == 'POST':
-        # Retrieve username and password from request data
         username = request.data.get('username')
         password = request.data.get('password')
-
-        # Ensure both username and password are provided
         if not username or not password:
             return Response({'error': 'Both username and password are required.'}, status=400)
-
-        # Get the User model
         User = get_user_model()
-
-        # Initialize user to None
         user = None
-
-        # Check if the username is an email and get the user
         if '@' in username:
             try:
                 email_user = User.objects.get(email=username)
@@ -146,12 +130,10 @@ def api_login(request):
         else:
             user = authenticate(username=username, password=password)
 
-        # If authentication was successful
         if user:
             token, _ = Token.objects.get_or_create(user=user)
             return Response({'token': token.key, 'userID': user.id}, status=200)
         else:
-            # Authentication failed
             return Response({'error': 'Invalid credentials'}, status=401)
 
 @api_view(['POST'])
@@ -160,7 +142,6 @@ def logout_view(request):
         logout(request)
         return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
     except Exception as e:
-        # Log the actual error for debugging purposes
         print(f"Error during logout: {str(e)}")
         return Response({'error': 'An error occurred during logout.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -175,8 +156,8 @@ class RecipeListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
-        print(serializer.is_valid())  # Check if serializer is valid
-        print(serializer.errors)      # Print errors if any
+        print(serializer.is_valid())  
+        print(serializer.errors)      
         if serializer.is_valid():
             serializer.save(user=self.request.user)
 
@@ -199,20 +180,16 @@ class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_create(self, serializer):
         print(self.request.data)
-        # Call the superclass's method to handle the standard save logic
         super().perform_create(serializer)
-        #serializer.save(user=self.request.user)
+
 
     def perform_update(self, serializer):
         if serializer.instance.user != self.request.user:
             raise permissions.PermissionDenied("You do not have permission to edit this recipe.")
         
-        # Check if an image is in the request
         image = self.request.FILES.get('image')
         if image:
-            # Save the image to the instance but do not commit yet
             serializer.instance.image.save(image.name, image, save=False)
-        # Perform validation
         serializer.is_valid(raise_exception=True)
         serializer.save()
         
@@ -223,7 +200,6 @@ class UserRecipeList(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        # This will capture the 'user_id' from the URL and filter the recipes
         user_id = self.kwargs['userId']
         return Recipe.objects.filter(user_id=user_id)
 
@@ -264,7 +240,7 @@ def search(request):
         serializer = RecipeSerializer(recipes, many=True)
         return JsonResponse(serializer.data, safe=False)
     else:
-        recipes = Recipe.objects.all() # or however you want to handle no query being present
+        recipes = Recipe.objects.all() 
         serializer = RecipeSerializer(recipes, many=True)
         return JsonResponse(serializer.data, safe=False)
 
@@ -283,11 +259,9 @@ def save_recipe(request, user_id, recipe_id):
             )
             
             if created:
-                # Recipe was saved successfully
                 serializer = SavedRecipeSerializer(saved_recipe)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
-                # Recipe was already saved
                 return Response(
                     {'message': 'Recipe was already saved.'}, 
                     status=status.HTTP_200_OK

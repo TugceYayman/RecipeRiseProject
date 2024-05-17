@@ -2,49 +2,49 @@
     text-align: center;
     margin-top: 30px;
     margin-bottom: 20px;
-    font-size: 2rem; /* Adjust the size as needed */
+    font-size: 2rem; 
 }
 
 .recipe-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Space between cards */
-    justify-content: center; /* Center cards within the container */
-    padding: 20px; /* Padding around the container */
-    max-width: 1200px; /* Max width of the container */
-    margin: auto; /* Center container on the page */
+    gap: 20px; 
+    justify-content: center; 
+    padding: 20px; 
+    max-width: 1200px; 
+    margin: auto; 
 }
 .recipe-card {
     background-color: #dcecec;
-    border-radius: 15px; /* Increased border radius for rounded corners */
+    border-radius: 15px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: calc(50% - 20px); /* Adjust width for two cards per row, accounting for gap */
-    margin-bottom: 20px; /* Space below each card */
-    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions for hover effects */
+    width: calc(50% - 20px); 
+    margin-bottom: 20px; 
+    transition: box-shadow 0.3s ease, transform 0.3s ease; 
     display: flex;
-    flex-direction: column; /* Organize content vertically */
-    align-items: center; /* Center items horizontally */
-    max-width: 450px; /* Decreased maximum width to make the card smaller */
+    flex-direction: column; 
+    align-items: center; 
+    max-width: 450px; 
 }
 
 .recipe-image {
-    width: 100%; /* Full width of the card */
+    width: 100%; 
     display: block;
-    overflow: hidden; /* Prevents image overflow */
+    overflow: hidden; 
 }
 
 .recipe-image img {
-    width: 100%; /* Image width is 100% of its container */
-    height: auto; /* Maintain aspect ratio */
-    object-fit: cover; /* Cover the area without stretching */
-    max-height: 300px; /* Maximum height for images */
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+    max-height: 300px; 
 }
 
 .recipe-details {
     padding: 15px;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: flex-start; /* Align text to the start */
+    flex-direction: column; 
+    align-items: flex-start;
 }
 
 .recipe-card:hover {
@@ -55,23 +55,23 @@
 .recipe-details {
     padding: 15px;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: space-between; /* Distribute space evenly */
+    flex-direction: column; 
+    justify-content: space-between; 
 }
 
 .recipe-title {
-    font-size: 1.25rem; /* Larger font size for the title */
+    font-size: 1.25rem; 
     margin-bottom: 10px;
 }
 
 .recipe-text {
-    font-size: 0.9rem; /* Smaller font size for details */
+    font-size: 0.9rem; 
     margin-bottom: 15px;
-    color: #555; /* Darker color for text */
+    color: #555; 
 }
 
 .recipe-cuisine {
-    font-style: italic; /* Italicize the cuisine */
+    font-style: italic; 
     margin-bottom: 15px;
 }
 
@@ -79,20 +79,18 @@
     background: #a8d1d1;
     color: white;
     padding: 10px 15px;
-    text-decoration: none; /* Remove underline */
-    border-radius: 5px; /* Rounded corners for the button */
-    font-weight: bold; /* Make the button text bold */
-    align-self: left; /* Center button in the details area */
-    margin-top: auto; /* Push button to bottom */
-    width: fit-content; /* Fit the content's width */
+    text-decoration: none; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    align-self: left; 
+    margin-top: auto; 
+    width: fit-content; 
 }
 
-/* Add other styles for title, text, and button as previously defined */
 
-/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .recipe-card {
         width: 100%;
-        max-width: none;  /* Full width on smaller screens */
+        max-width: none;  
     }
 }
