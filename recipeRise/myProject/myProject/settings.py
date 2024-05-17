@@ -15,7 +15,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-0%riwal*zo-^7q=_83m2b7k)2y)wrtk37$$+8uw5$^yxxpa1(&"
+SECRET_KEY = "YOUR_SECRET_KEY"
 
 DEBUG = True
 
@@ -92,9 +92,9 @@ WSGI_APPLICATION = "myProject.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'recipe_app_database',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'NAME': 'YOUR_DATABASE',
+        'USER': 'YOUR_USERNAME',
+        'PASSWORD': 'YOUR_PASSWORD',
         'HOST': 'localhost',  
         'PORT': '3306',        
     }
